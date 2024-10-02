@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dichotomy", "Dichotomy\Dichotomy.csproj", "{68E53878-9432-44E5-852B-8F30C175EC39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRatio", "GoldenRatio\GoldenRatio.csproj", "{EF826FC9-0DD5-49BF-BC22-2E1122370027}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68E53878-9432-44E5-852B-8F30C175EC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68E53878-9432-44E5-852B-8F30C175EC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68E53878-9432-44E5-852B-8F30C175EC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68E53878-9432-44E5-852B-8F30C175EC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD758FCC-8538-4891-939D-B7C02242038C}
+	EndGlobalSection
+EndGlobal
