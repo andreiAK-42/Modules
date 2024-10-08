@@ -1,7 +1,7 @@
-﻿using org.mariuszgromada.math.mxparser;
-using OxyPlot;
+﻿using OxyPlot;
 using OxyPlot.Series;
 using System.Windows;
+using org.mariuszgromada.math.mxparser;
 
 namespace GoldenRatio.Methods
 {
