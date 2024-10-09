@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dichotomy", "Dichotomy\Dichotomy.csproj", "{68E53878-9432-44E5-852B-8F30C175EC39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRatio", "GoldenRatio\GoldenRatio.csproj", "{EF826FC9-0DD5-49BF-BC22-2E1122370027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenRatio", "GoldenRatio\GoldenRatio.csproj", "{EF826FC9-0DD5-49BF-BC22-2E1122370027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newton", "Newton\Newton.csproj", "{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF826FC9-0DD5-49BF-BC22-2E1122370027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

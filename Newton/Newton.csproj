@@ -5,10 +5,10 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
-    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
     <PackageReference Include="MathParser.org-mXparser" Version="6.0.0" />
     <PackageReference Include="OxyPlot.Core" Version="2.2.0" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.2.0" />
