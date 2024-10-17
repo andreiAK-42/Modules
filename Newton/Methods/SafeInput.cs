@@ -1,5 +1,4 @@
-﻿using OxyPlot;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Newton.Methods
 {
@@ -33,19 +32,19 @@ namespace Newton.Methods
             }
         }
 
-        public static (int, int) GetSafeIntervalAB(MainWindow window)
+        public static (double, double) GetSafeIntervalAB(MainWindow window)
         {
-            if (window.tba.Text == "Min" || window.tba.Text == "Max")
+            if (window.tba.Text == "Min" || window.tbb.Text == "Max")
             {
                 return (-10, 10);
             }
             else
             {
-                if (int.TryParse(window.tba.Text, out int a) && (int.TryParse(window.tbb.Text, out int b)))
+                if (double.TryParse(window.tba.Text, out double a) && (double.TryParse(window.tbb.Text, out double b)))
                 {
                     if (a < b)
                     {
-                        return (int.Parse(window.tba.Text), int.Parse(window.tbb.Text));
+                        return (double.Parse(window.tba.Text), double.Parse(window.tbb.Text));
                     }
                     else
                     {
@@ -59,20 +58,6 @@ namespace Newton.Methods
                     return (-10, 10);
                 }
             }
-        }
-
-        public static int CheckNumberIntersections(List<DataPoint> Graphic)
-        {
-            int crossings = 0;
-
-            for (int counterI = 1; counterI < Graphic.Count; ++counterI)
-            {
-                if ((Graphic[counterI - 1].Y < 0 && Graphic[counterI].Y > 0) || (Graphic[counterI - 1].Y > 0 && Graphic[counterI].Y < 0) || (Graphic[counterI - 1].Y == 0 && Graphic[counterI].Y < 0) || (Graphic[counterI - 1].Y < 0 && Graphic[counterI].Y == 0))
-                {
-                    crossings++;
-                }
-            }
-            return crossings;
         }
 
         public static void ShowMessage(string message, MessageBoxImage messageBoxImage)

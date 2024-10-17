@@ -21,6 +21,18 @@ namespace Newton
             Graph.GetFunction(this, tbFunction.Text);
             Graph.FindRoot(this);
         }
+
+        private void buttonGetMinimum_Click(object sender, RoutedEventArgs e)
+        {
+            Graph.GetFunction(this, tbFunction.Text);
+            Graph.FindMinimum(this);
+        }
+
+        private void buttonGetMaximum_Click(object sender, RoutedEventArgs e)
+        {
+            Graph.GetFunction(this, tbFunction.Text);
+            Graph.FindMaximum(this);
+        }
     }
 
 }

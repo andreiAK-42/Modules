@@ -3,13 +3,12 @@ using OxyPlot;
 using MathNet.Symbolics;
 using Function = org.mariuszgromada.math.mxparser.Function;
 using System.Windows;
+using MathNet.Numerics;
 
 namespace Newton.Methods
 {
     public class Parser
     {
-        private static double Phi = (1 + Math.Sqrt(5)) / 2;
-
         private List<DataPoint> Graphic = new List<DataPoint>();
         private string CurrentFunc = "";
         private const int MaxIterations = 100;
@@ -72,7 +71,89 @@ namespace Newton.Methods
             window.pvGraph.DataContext = plotModel;
         }
 
-        public static string FindDerivative(string functionString)
+        public void FindRoot(MainWindow window)
+        {
+            Function func = new Function("f(x) = " + window.tbFunction.Text);
+            string fder = FindDerivative(window.tbFunction.Text);
+            Function derFunc = new Function("f(x) = " + fder);
+
+            var intervalParse = SafeInput.GetSafeIntervalAB(window);
+            double x0 = Convert.ToDouble(window.tbx0.Text);
+            double eps = Convert.ToDouble(window.tbe.Text);
+
+            double x = x0;
+            int i = 0;
+
+            while (Math.Abs(SolveFunc(func, x.ToString().Replace(",", "."))) > eps && i < MaxIterations)
+            {
+                x = x - SolveFunc(func, x.ToString().Replace(",", ".")) / SolveFunc(derFunc, x.ToString().Replace(",", "."));
+                i++;
+            }
+
+            if (i >= MaxIterations)
+            {
+                SafeInput.ShowMessage($"Вероятно корней нет. Превышено количество итераций 100", MessageBoxImage.Error);
+                return;
+            }
+
+            SafeInput.ShowMessage($"Результат:\n Корень = {x}", MessageBoxImage.Information);
+        }
+
+        public void FindMinimum(MainWindow window, string function = null)
+        {
+            Function func = new Function("f(x) = " + function == null ? window.tbFunction.Text : function);
+            string fder = FindDerivative(function == null ? window.tbFunction.Text : function);
+            Function dfFunc = new Function("f(x) = " + fder);
+            string ffder = FindDerivative(fder);
+            string fffder = FindDerivative(ffder);
+            Function dffFunc = new Function("f(x) = " + ffder);
+            Function dfffFunc = new Function("f(x) = " + fffder);
+
+            var intervalParse = SafeInput.GetSafeIntervalAB(window);
+            double a = intervalParse.Item1;
+            double b = intervalParse.Item2;
+            double eps = Convert.ToDouble(window.tbe.Text);
+
+            double x0 = (a + b) / 2; // Начальное приближение
+            double x1;
+
+            while (true)
+            {
+                double f1 = SolveFunc(dfFunc, x0.ToString().Replace(",", "."));
+                double f2 = SolveFunc(dffFunc, x0.ToString().Replace(",", "."));
+                double f3 = SolveFunc(dfffFunc, x0.ToString().Replace(",", "."));
+
+                if (Math.Abs(f1) < eps || f2 <= 0) // Условие остановки
+                {
+                    SafeInput.ShowMessage($"Результат:\n Результат = {x0}", MessageBoxImage.Information);
+                    return;
+                }
+
+                // Обновляем значение x с учетом первой и второй производной
+                x1 = x0 - f1 / f2;
+
+                // Проверка, не вышло ли x1 за пределы отрезка
+                if (x1 < a || x1 > b)
+                {
+                    SafeInput.ShowMessage($"Результат:\n Результат = {x0}", MessageBoxImage.Information); // Возвращаем текущее значение, если вышло за пределы
+                    return;
+                }
+
+                x0 = x1; // Обновляем значение для следующей итерации
+            }
+        }
+
+        public void FindMaximum(MainWindow window)
+        {
+            FindMinimum(window, "-(" + window.tbFunction.Text + ")");
+        }
+
+        private static double SolveFunc(Function function, string x)
+        {
+            return new org.mariuszgromada.math.mxparser.Expression($"f({x})", function).calculate();
+        }
+
+        private static string FindDerivative(string functionString)
         {
             var expr = SymbolicExpression.Parse(functionString);
             var x = SymbolicExpression.Variable("x");
@@ -80,39 +161,6 @@ namespace Newton.Methods
             expr.Differentiate(x);
 
             return expr.Differentiate(x).ToString();
-        }
-
-        public void FindRoot(MainWindow window)
-        {
-            Function func = new Function("f(x) = " + window.tbFunction.Text);
-            
-            Function derFunc = new Function("f(x) = " + FindDerivative(window.tbFunction.Text));
-
-            var intervalParse = SafeInput.GetSafeIntervalAB(window);
-            double x0 = Convert.ToDouble(intervalParse.Item1);
-            double eps = Convert.ToDouble(window.tbe.Text);
-
-            double x = x0;
-            int i = 0;
-
-            while (Math.Abs(SolveFunc(func, x.ToString())) > eps && i < MaxIterations)
-            {
-                x = x - SolveFunc(func, x.ToString()) / SolveFunc(derFunc, x.ToString().Replace(",", "."));
-                i++;
-
-            }
-
-            if (i >= MaxIterations)
-            {
-                throw new Exception("Превышено максимальное число итераций");
-            }
-
-            SafeInput.ShowMessage($"Результат:\n Корень = {x}", MessageBoxImage.Information);
-        }
-
-        public static double SolveFunc(Function function, string x)
-        {
-            return new org.mariuszgromada.math.mxparser.Expression($"f({x})", function).calculate();
         }
     }
 }

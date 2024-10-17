@@ -35,7 +35,7 @@ namespace GoldenRatio.Methods
 
         public static (int, int) GetSafeIntervalAB(MainWindow window)
         {
-            if (window.tba.Text == "Min" || window.tba.Text == "Max")
+            if (window.tba.Text == "Min" || window.tbb.Text == "Max")
             {
                 return (-10, 10);
             }
