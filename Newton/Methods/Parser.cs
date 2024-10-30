@@ -1,16 +1,14 @@
-﻿using OxyPlot.Series;
-using OxyPlot;
+﻿using OxyPlot;
+using System.Windows;
+using OxyPlot.Series;
 using MathNet.Symbolics;
 using Function = org.mariuszgromada.math.mxparser.Function;
-using System.Windows;
-using MathNet.Numerics;
 
 namespace Newton.Methods
 {
     public class Parser
     {
         private List<DataPoint> Graphic = new List<DataPoint>();
-        private string CurrentFunc = "";
         private const int MaxIterations = 100;
 
         public void GetFunction(MainWindow window, string function)
@@ -18,8 +16,6 @@ namespace Newton.Methods
             Graphic.Clear();
 
             Function func = new Function("f(x) = " + function);
-
-            CurrentFunc = function;
 
             var intervalParse = SafeInput.GetSafeInterval(window);
 
@@ -33,7 +29,7 @@ namespace Newton.Methods
             var xLine = new LineSeries
             {
                 Title = "X",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 0, 0),
                 StrokeThickness = 2
             };
 
@@ -43,30 +39,26 @@ namespace Newton.Methods
             var absicc = new LineSeries
             {
                 Title = "Y",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 0, 0),
                 StrokeThickness = 2,
             };
 
             absicc.Points.Add(new DataPoint(0, intervalParse.Item2));
             absicc.Points.Add(new DataPoint(0, intervalParse.Item1));
 
-            // Создаем серию точек графика
             var lineSeries = new LineSeries
             {
                 Title = "f(x)",
-                Color = OxyColor.FromRgb(0, 0, 255), // Синий цвет линии
+                Color = OxyColor.FromRgb(0, 0, 255),
                 LineStyle = LineStyle.Dot
             };
 
-            // Добавляем все точки в серию
             lineSeries.Points.AddRange(Graphic);
 
-            // Добавляем серию точек к модели графика
             plotModel.Series.Add(lineSeries);
             plotModel.Series.Add(xLine);
             plotModel.Series.Add(absicc);
 
-            // Отображаем график
             window.pvGraph.Model = plotModel;
             window.pvGraph.DataContext = plotModel;
         }
@@ -96,7 +88,9 @@ namespace Newton.Methods
                 return;
             }
 
-            SafeInput.ShowMessage($"Результат:\n Корень = {x}", MessageBoxImage.Information);
+            string resultX = Math.Round(x, window.tbe.Text.Length - 2).ToString();
+
+            SafeInput.ShowMessage($"Результат:\n Корень = {resultX}", MessageBoxImage.Information);
         }
 
         public void FindMinimum(MainWindow window, string function = null)
@@ -114,7 +108,7 @@ namespace Newton.Methods
             double b = intervalParse.Item2;
             double eps = Convert.ToDouble(window.tbe.Text);
 
-            double x0 = (a + b) / 2; // Начальное приближение
+            double x0 = (a + b) / 2;
             double x1;
 
             while (true)
@@ -123,23 +117,25 @@ namespace Newton.Methods
                 double f2 = SolveFunc(dffFunc, x0.ToString().Replace(",", "."));
                 double f3 = SolveFunc(dfffFunc, x0.ToString().Replace(",", "."));
 
-                if (Math.Abs(f1) < eps || f2 <= 0) // Условие остановки
+                if (Math.Abs(f1) < eps || f2 <= 0)
                 {
-                    SafeInput.ShowMessage($"Результат:\n Результат = {x0}", MessageBoxImage.Information);
+                    string resultX = Math.Round(x0, window.tbe.Text.Length - 2).ToString();
+
+                    SafeInput.ShowMessage($"Результат:\n Результат = {resultX}", MessageBoxImage.Information);
                     return;
                 }
 
-                // Обновляем значение x с учетом первой и второй производной
                 x1 = x0 - f1 / f2;
 
-                // Проверка, не вышло ли x1 за пределы отрезка
                 if (x1 < a || x1 > b)
                 {
-                    SafeInput.ShowMessage($"Результат:\n Результат = {x0}", MessageBoxImage.Information); // Возвращаем текущее значение, если вышло за пределы
+                    string resultX = Math.Round(x0, window.tbe.Text.Length - 2).ToString();
+
+                    SafeInput.ShowMessage($"Результат: {resultX}", MessageBoxImage.Information); // Возвращаем текущее значение, если вышло за пределы
                     return;
                 }
 
-                x0 = x1; // Обновляем значение для следующей итерации
+                x0 = x1;
             }
         }
 

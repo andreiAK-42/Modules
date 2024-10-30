@@ -34,5 +34,4 @@ namespace Newton
             Graph.FindMaximum(this);
         }
     }
-
 }
