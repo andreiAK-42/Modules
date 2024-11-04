@@ -1,4 +1,5 @@
 ﻿using Interface;
+using System.Drawing;
 
 namespace Dichotomy
 {
@@ -22,9 +23,11 @@ namespace Dichotomy
             return "Метод дихотомии";
         }
 
-        public string GetIcon(string applicationFolder)
+        public Bitmap GetIcon()
         {
-            return applicationFolder + @"\Img\DichotomyIcon.png";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Resource));
+
+            return (Bitmap)resources.GetObject("icon.Image");
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Newton.Methods
             Function derFunc = new Function("f(x) = " + fder);
 
             var intervalParse = SafeInput.GetSafeIntervalAB(window);
-            double x0 = Convert.ToDouble(window.tbx0.Text);
+            double x0 = Convert.ToDouble(window.tba.Text);
             double eps = Convert.ToDouble(window.tbe.Text);
 
             double x = x0;
@@ -88,15 +88,28 @@ namespace Newton.Methods
                 return;
             }
 
+            var plotModel = window.pvGraph.Model;
+
+            var pointSeries = new ScatterSeries
+            {
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 10,
+                MarkerFill = OxyColors.Green
+            };
+
+            pointSeries.Points.Add(new ScatterPoint(x, SolveFunc(func, x.ToString().Replace(",", ".")), 10));
+            plotModel.Series.Add(pointSeries);
+            window.pvGraph.InvalidatePlot(true);
+
             string resultX = Math.Round(x, window.tbe.Text.Length - 2).ToString();
 
             SafeInput.ShowMessage($"Результат:\n Корень = {resultX}", MessageBoxImage.Information);
         }
 
-        public void FindMinimum(MainWindow window, string function = null)
+        public void FindMinMax(MainWindow window)
         {
-            Function func = new Function("f(x) = " + function == null ? window.tbFunction.Text : function);
-            string fder = FindDerivative(function == null ? window.tbFunction.Text : function);
+            Function func = new Function("f(x) = " + window.tbFunction.Text);
+            string fder = FindDerivative(window.tbFunction.Text);
             Function dfFunc = new Function("f(x) = " + fder);
             string ffder = FindDerivative(fder);
             string fffder = FindDerivative(ffder);
@@ -108,40 +121,77 @@ namespace Newton.Methods
             double b = intervalParse.Item2;
             double eps = Convert.ToDouble(window.tbe.Text);
 
-            double x0 = (a + b) / 2;
-            double x1;
+            double x = Convert.ToDouble(window.tbx0.Text);
 
-            while (true)
+            var plotModel = window.pvGraph.Model;
+
+            var pointSeries = new ScatterSeries
             {
-                double f1 = SolveFunc(dfFunc, x0.ToString().Replace(",", "."));
-                double f2 = SolveFunc(dffFunc, x0.ToString().Replace(",", "."));
-                double f3 = SolveFunc(dfffFunc, x0.ToString().Replace(",", "."));
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 10,
+                MarkerFill = OxyColors.Black
+            };
 
-                if (Math.Abs(f1) < eps || f2 <= 0)
+            var pointSeriesSolver = new ScatterSeries
+            {
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 5,
+                MarkerFill = OxyColors.Blue
+            };
+
+            while (Math.Abs(SolveFunc(dfFunc, x.ToString().Replace(",", "."))) > eps)
+            {
+                var lineSeriesPrvev = new LineSeries
                 {
-                    string resultX = Math.Round(x0, window.tbe.Text.Length - 2).ToString();
+                    Title = x.ToString(),
+                    Color = OxyColor.FromRgb(0, 0, 255),
+                    LineStyle = LineStyle.Dash
+                };
+                lineSeriesPrvev.Points.Add(new DataPoint(x, SolveFunc(func, x.ToString().Replace(",", "."))));
+                lineSeriesPrvev.Points.Add(new DataPoint(x - SolveFunc(dfFunc, x.ToString().Replace(",", ".")) / SolveFunc(dffFunc, x.ToString().Replace(",", ".")), SolveFunc(func, (x - SolveFunc(dfFunc, x.ToString().Replace(",", ".")) / SolveFunc(dffFunc, x.ToString().Replace(",", "."))).ToString().Replace(",", "."))));
+                plotModel.Series.Add(lineSeriesPrvev);
 
-                    SafeInput.ShowMessage($"Результат:\n Результат = {resultX}", MessageBoxImage.Information);
+
+                var lineSeries = new LineSeries
+                {
+                    Title = x.ToString(),
+                    Color = OxyColor.FromRgb(0, 0, 255),
+                    LineStyle = LineStyle.Dash
+                };
+                lineSeries.Points.Add(new DataPoint(x, 0));
+                lineSeries.Points.Add(new DataPoint(x, SolveFunc(func, x.ToString().Replace(",", "."))));
+                plotModel.Series.Add(lineSeries);
+
+                pointSeriesSolver.Points.Add(new ScatterPoint(x, SolveFunc(func, x.ToString().Replace(",", ".")), 5));
+
+                x = x - SolveFunc(dfFunc, x.ToString().Replace(",", ".")) / SolveFunc(dffFunc, x.ToString().Replace(",", "."));
+
+                if (x < a || x > b)
+                {
+                    SafeInput.ShowMessage($"Выход за интервал изоляции. Ничего не найдено!", MessageBoxImage.Error);
                     return;
                 }
-
-                x1 = x0 - f1 / f2;
-
-                if (x1 < a || x1 > b)
-                {
-                    string resultX = Math.Round(x0, window.tbe.Text.Length - 2).ToString();
-
-                    SafeInput.ShowMessage($"Результат: {resultX}", MessageBoxImage.Information); // Возвращаем текущее значение, если вышло за пределы
-                    return;
-                }
-
-                x0 = x1;
             }
-        }
 
-        public void FindMaximum(MainWindow window)
-        {
-            FindMinimum(window, "-(" + window.tbFunction.Text + ")");
+            SolveFunc(dffFunc, x.ToString().Replace(",", "."));
+
+            if (SolveFunc(dffFunc, x.ToString().Replace(",", ".")) > 0)
+            {
+                SafeInput.ShowMessage($"Найден минимум: {Math.Round(x, window.tbe.Text.Length - 2)}:{Math.Round(SolveFunc(func, x.ToString().Replace(",", ".")), window.tbe.Text.Length - 2)}", MessageBoxImage.Information);
+            }
+            else if (SolveFunc(dffFunc, x.ToString().Replace(",", ".")) < 0)
+            {
+                SafeInput.ShowMessage($"Найден максимум: {Math.Round(x, window.tbe.Text.Length - 2)}:{Math.Round(SolveFunc(func, x.ToString().Replace(",", ".")), window.tbe.Text.Length - 2)}", MessageBoxImage.Information);
+            }
+            else
+            {
+                SafeInput.ShowMessage($"Найдена точка перегиба: {Math.Round(x, window.tbe.Text.Length - 2)}:{Math.Round(SolveFunc(func, x.ToString().Replace(",", ".")), window.tbe.Text.Length - 2)}", MessageBoxImage.Information);
+            }
+
+            pointSeries.Points.Add(new ScatterPoint(x, SolveFunc(func, x.ToString().Replace(",", ".")), 10));
+            plotModel.Series.Add(pointSeries);
+            plotModel.Series.Add(pointSeriesSolver);
+            window.pvGraph.InvalidatePlot(true);
         }
 
         private static double SolveFunc(Function function, string x)

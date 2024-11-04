@@ -25,13 +25,18 @@ namespace Newton
         private void buttonGetMinimum_Click(object sender, RoutedEventArgs e)
         {
             Graph.GetFunction(this, tbFunction.Text);
-            Graph.FindMinimum(this);
+            Graph.FindMinMax(this);
         }
 
         private void buttonGetMaximum_Click(object sender, RoutedEventArgs e)
         {
             Graph.GetFunction(this, tbFunction.Text);
-            Graph.FindMaximum(this);
+            Graph.FindMinMax(this);
+        }
+
+        private void tba_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

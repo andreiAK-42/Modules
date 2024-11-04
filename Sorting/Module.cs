@@ -1,9 +1,9 @@
 ﻿using Interface;
 using System.Drawing;
 
-namespace GoldenRatio
+namespace Sorting
 {
-    class Module : IModule
+    class Sorting : IModule
     {
         public object Show()
         {
@@ -20,7 +20,7 @@ namespace GoldenRatio
 
         public string GetModuleName()
         {
-            return "Метод золотого сечения";
+            return "Методы сортировки";
         }
 
         public Bitmap GetIcon()

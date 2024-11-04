@@ -1,4 +1,5 @@
 ﻿using Interface;
+using System.Drawing;
 
 namespace Newton
 {
@@ -22,9 +23,11 @@ namespace Newton
             return "Метод Ньютона";
         }
 
-        public string GetIcon(string applicationFolder)
+        public Bitmap GetIcon()
         {
-            return applicationFolder + @"\Img\Newton.png";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Resource));
+
+            return (Bitmap)resources.GetObject("icon.Image");
         }
     }
 }

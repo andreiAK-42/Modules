@@ -9,20 +9,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#FFEAEAEA">
 
-        <Grid Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="246" Height="265">
+        <Grid Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="246" Height="271">
             <TextBlock x:Name="labelFunction" Margin="10,10,122,178" TextWrapping="Wrap" Text="f(x) = " FontFamily="Verdana" FontSize="22" Foreground="#FF333333"/>
-            <TextBlock x:Name="labelx0" Margin="0,59,179,0" TextWrapping="Wrap" Text="x₀ = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333"/>
             <TextBox x:Name="tbFunction" HorizontalAlignment="Left" Height="31" Margin="81,12,0,0" TextWrapping="Wrap" Text="Функция" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
-            <TextBox x:Name="tbx0" HorizontalAlignment="Left" Height="31" Margin="81,57,0,0" TextWrapping="Wrap" Text="Значение" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
-            <TextBox x:Name="tbXEnd" HorizontalAlignment="Left" Height="31" Margin="166,167,0,0" TextWrapping="Wrap" Text="Max" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333"/>
-            <TextBox x:Name="tbXStart" HorizontalAlignment="Left" Height="31" Margin="10,167,0,0" TextWrapping="Wrap" Text="Min" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333"/>
-            <Label Content="↔" HorizontalAlignment="Center" Height="54" Margin="0,155,0,0" VerticalAlignment="Top" Width="42" FontFamily="Verdana" FontSize="36" Foreground="#FF333333"/>
-            <TextBlock x:Name="labelb_Копировать" TextWrapping="Wrap" Text="e = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="54" Height="22" VerticalAlignment="Top" Margin="0,216,182,0" Foreground="#FF333333" />
-            <TextBox x:Name="tbe" HorizontalAlignment="Left" Height="31" Margin="81,216,0,0" TextWrapping="Wrap" Text="0,00001" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
-            <TextBlock x:Name="labela" Margin="0,92,179,0" TextWrapping="Wrap" Text="a = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333"/>
-            <TextBlock x:Name="labelb" Margin="0,124,179,0" TextWrapping="Wrap" Text="b = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333"/>
-            <TextBox x:Name="tba" HorizontalAlignment="Left" Height="31" Margin="81,93,0,0" TextWrapping="Wrap" Text="Min" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
-            <TextBox x:Name="tbb" HorizontalAlignment="Left" Height="31" Margin="81,129,0,0" TextWrapping="Wrap" Text="Max" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
+            <TextBox x:Name="tbXEnd" HorizontalAlignment="Left" Height="32" Margin="166,170,0,0" TextWrapping="Wrap" Text="Max" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333" ToolTip="Интервал по значению x. Максимальный" />
+            <TextBox x:Name="tbXStart" HorizontalAlignment="Left" Height="32" Margin="10,170,0,0" TextWrapping="Wrap" Text="Min" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333" ToolTip="Интервал по значению x. Минимальный"/>
+            <Label Content="↔" HorizontalAlignment="Center" Height="54" Margin="0,158,0,0" VerticalAlignment="Top" Width="42" FontFamily="Verdana" FontSize="36" Foreground="#FF333333"/>
+            <TextBlock x:Name="labelb_Копировать" TextWrapping="Wrap" Text="e = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="54" Height="22" VerticalAlignment="Top" Margin="0,220,182,0" Foreground="#FF333333" />
+            <TextBox x:Name="tbe" HorizontalAlignment="Left" Height="30" Margin="81,220,0,0" TextWrapping="Wrap" Text="0,00001" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" ToolTip="Точность" />
+            <TextBlock x:Name="labela" Margin="0,96,179,0" TextWrapping="Wrap" Text="a = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333" ToolTip="Интервал изоляции. a"/>
+            <TextBlock x:Name="labelb" Margin="0,128,179,0" TextWrapping="Wrap" Text="b = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333" ToolTip="Интервал изоляции. b" />
+            <TextBox x:Name="tba" HorizontalAlignment="Left" Height="32" Margin="81,96,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" TextChanged="tba_TextChanged"/>
+            <TextBox x:Name="tbb" HorizontalAlignment="Left" Height="32" Margin="81,132,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
+            <TextBlock x:Name="labelx0" Margin="0,59,179,0" TextWrapping="Wrap" Text="X0 = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="#FF333333" ToolTip="Интервал изоляции. a"/>
+            <TextBox x:Name="tbx0" HorizontalAlignment="Left" Height="32" Margin="81,59,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" TextChanged="tba_TextChanged"/>
         </Grid>
 
         <Grid Margin="0,0,10,10" Height="72" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="657">
@@ -32,8 +32,7 @@
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
             <Button x:Name="buttonSolve" Content="Точка пересечения" HorizontalAlignment="Right" Height="41" Margin="0,21,10,0" VerticalAlignment="Top" Width="209" BorderBrush="#FF508A48" Background="#FF2ACC34" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Pen" RenderTransformOrigin="0,0" Grid.RowSpan="3" Click="Solve"/>
-            <Button x:Name="buttonGetMinimum" Content="Минимум" HorizontalAlignment="Right" Height="41" Margin="0,21,224,0" VerticalAlignment="Top" Width="209" BorderBrush="#FF508A48" Background="#FFE67C32" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Pen" RenderTransformOrigin="0,0" Grid.RowSpan="3" Click="buttonGetMinimum_Click"/>
-            <Button x:Name="buttonGetMaximum" Content="Максимум" HorizontalAlignment="Right" Height="41" Margin="0,21,438,0" VerticalAlignment="Top" Width="209" BorderBrush="#FF508A48" Background="#FF3287E6" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Pen" RenderTransformOrigin="0,0" Grid.RowSpan="3" Click="buttonGetMaximum_Click"/>
+            <Button x:Name="buttonGetMinimum" Content="Мин/Макс" HorizontalAlignment="Right" Height="41" Margin="0,21,224,0" VerticalAlignment="Top" Width="209" BorderBrush="#FF508A48" Background="#FFE67C32" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Pen" RenderTransformOrigin="0,0" Grid.RowSpan="3" Click="buttonGetMinimum_Click"/>
         </Grid>
 
 
