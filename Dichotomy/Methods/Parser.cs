@@ -4,6 +4,8 @@ using OxyPlot.Series;
 using System.Windows;
 using DichotomyMethod.Methods;
 using org.mariuszgromada.math.mxparser;
+using OxyPlot.Axes;
+using OxyPlot.Wpf;
 
 namespace DichotomyMethod
 {
@@ -27,12 +29,12 @@ namespace DichotomyMethod
                 Graphic.Add(new DataPoint(counterI, SolveFunc(func, counterI.ToString())));
             }
 
-            var plotModel = new PlotModel { Title = "График функции f(x)" };
+            var plotModel = new PlotModel { Title = "График функции f(x)", TextColor= OxyColor.FromRgb(255, 255, 255) };
 
             var xLine = new LineSeries
             {
                 Title = "X",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 255, 255),
                 StrokeThickness = 2
             };
 
@@ -42,7 +44,7 @@ namespace DichotomyMethod
             var absicc = new LineSeries
             {
                 Title = "Y",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 255, 255), // Красный цвет
                 StrokeThickness = 2,
             };
 
@@ -53,7 +55,7 @@ namespace DichotomyMethod
             var lineSeries = new LineSeries
             {
                 Title = "f(x)",
-                Color = OxyColor.FromRgb(0, 0, 255), // Синий цвет линии
+                Color = OxyColor.FromRgb(24, 239, 255), // Синий цвет линии
                 LineStyle = LineStyle.Dot
             };
 
@@ -64,6 +66,8 @@ namespace DichotomyMethod
             plotModel.Series.Add(lineSeries);
             plotModel.Series.Add(xLine);
             plotModel.Series.Add(absicc);
+
+          
 
             // Отображаем график
             window.pvGraph.Model = plotModel;

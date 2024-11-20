@@ -1,4 +1,6 @@
-﻿namespace Sorting
+﻿using System.Windows;
+
+namespace Sorting
 {
     public class Methods
     {
@@ -16,12 +18,12 @@
             {
                 for (int counterI = 0; counterI < massive.Length - 1; ++counterI)
                 {
-                    ++counterIteration;
                     if (ascending ? massive[counterI] > massive[counterI + 1] : massive[counterI] < massive[counterI + 1])
                     {
                         massive.Replace(counterI, counterI + 1);
                     }
                 }
+                ++counterIteration;
             }
             return (counterIteration, massive);
         }
@@ -37,12 +39,12 @@
             {
                 for (int counterI = 0; counterI < massive.Length - 1; ++counterI)
                 {
-                    ++counterIteration;
                     if (ascending ? massive[counterI] > massive[counterI + 1] : massive[counterI] < massive[counterI + 1])
                     {
                         massive.Replace(counterI, counterI + 1);
                     }
                 }
+                ++counterIteration;
             }
             return (counterIteration, massive);
         }
@@ -223,6 +225,7 @@
                         flag = 1;    // перемещения в этом цикле были
                     }
                 }
+                ++counterIteration;
                 left++; // сдвигаем левую границу на следующий элемент
                 if (flag == 0) break;
             }
@@ -281,12 +284,18 @@
         {
             Random random = new Random();
             int counterIteration = 0;
+            int counterIterationBorder = GetBorderForBogo();
             int[] massive = new int[originalMassive.Length];
 
             originalMassive.CopyTo(massive, 0);
 
             while (!Sorted(massive, ascending))
             {
+                if (counterIterationBorder <= counterIteration)
+                {
+                    break;
+                }
+
                 for (int counterI = 0; counterI <= massive.Length - 1; ++counterI)
                 {
                     ++counterIteration;
@@ -306,12 +315,18 @@
         {
             Random random = new Random();
             int counterIteration = 0;
+            int counterIterationBorder = GetBorderForBogo();
             double[] massive = new double[originalMassive.Length];
 
             originalMassive.CopyTo(massive, 0);
 
             while (!Sorted(massive, ascending))
             {
+                if (counterIterationBorder <= counterIteration)
+                {
+                    break;
+                }
+
                 for (int counterI = 0; counterI <= massive.Length - 1; ++counterI)
                 {
                     ++counterIteration;
@@ -325,6 +340,20 @@
                 }
             }
             return (counterIteration, massive);
+        }
+
+        public static int GetBorderForBogo()
+        {
+            BogoSortBorder bogoSortBorder = new BogoSortBorder();
+
+            if (bogoSortBorder.ShowDialog() == true)
+            {
+                return bogoSortBorder.border;
+            }
+            else
+            {
+                return 10000;
+            }
         }
         #endregion
 
@@ -383,6 +412,6 @@
 
             return massive;
         }
+        #endregion
     }
-    #endregion
 }

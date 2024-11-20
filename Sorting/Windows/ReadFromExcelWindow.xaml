@@ -1,14 +1,14 @@
-﻿<Window x:Class="Sorting.ReadFromFileWindow"
+﻿<Window x:Class="Sorting.ReadFromExcelWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sorting"
         mc:Ignorable="d"
-        Title="Чтение из файла" Height="265" Width="420" MinHeight="260" MinWidth="420" ResizeMode="NoResize" HorizontalAlignment="Left" VerticalAlignment="Top">
+        Title="Чтение из Excel" Background="Green" Height="265" Width="420" MinHeight="260" MinWidth="420" ResizeMode="NoResize" HorizontalAlignment="Left" VerticalAlignment="Top">
     <Grid Background="#FFEAEAEA" Height="240" Width="420" MinHeight="250" MinWidth="420" VerticalAlignment="Center" HorizontalAlignment="Left">
-        <Label Content="Разделитель" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" Width="87" Padding="0,5,5,5" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbSplitSymbol" HorizontalAlignment="Left" Height="31" Margin="30,40,0,0" TextWrapping="Wrap" Text=";" VerticalAlignment="Top" Width="24" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" MaxLength="1" IsUndoEnabled="False"/>
+        <Label Content="Лист" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" Width="87" Padding="0,5,5,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tbSheetName" HorizontalAlignment="Left" Height="31" Margin="10,40,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="103" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" IsUndoEnabled="False"/>
         <Border x:Name="borderSelectFile" BorderBrush="Black" CornerRadius="10" BorderThickness="1" Margin="189,0,0,26" MouseDown="MouseDown_SelectFile" MouseEnter="MouseEnter" MouseLeave="MouseLeave" HorizontalAlignment="Left" Width="98" Height="32" VerticalAlignment="Bottom" >
             <Label Content="Выбрать" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0" Margin="-1,-1,-1,-1"/>
         </Border>
@@ -21,6 +21,7 @@
         <Label Content="Integer" HorizontalAlignment="Left" Height="26" Margin="319,25,0,0" VerticalAlignment="Top" Width="71"/>
         <RadioButton x:Name="rbDouble" Content="RadioButton" HorizontalAlignment="Left" Height="15" Margin="296,61,0,0" VerticalAlignment="Top" Width="17" IsChecked="False"/>
         <Label Content="Double" HorizontalAlignment="Left" Height="26" Margin="319,56,0,0" VerticalAlignment="Top" Width="71"/>
+
 
     </Grid>
 </Window>

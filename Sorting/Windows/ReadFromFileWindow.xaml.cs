@@ -2,9 +2,10 @@
 using System.Windows;
 using Microsoft.Win32;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Controls;
-
+using System.Drawing;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace Sorting
 {
@@ -13,9 +14,17 @@ namespace Sorting
         public int[] MassiveInteger;
         public double[] MassiveDouble;
         public byte SortType;
+        VisualManager VisualManager;
+
         public ReadFromFileWindow()
         {
             InitializeComponent();
+            VisualManager = new VisualManager(this);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Resource));
+
+            Bitmap icon7 = (Bitmap)resources.GetObject("shutdown.Image");
+            shutdown.Source = Imaging.CreateBitmapSourceFromHBitmap(icon7.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon7.Width, icon7.Height));
+
         }
 
         private void MouseDown_SelectFile(object sender, MouseButtonEventArgs e)
@@ -82,6 +91,16 @@ namespace Sorting
         public void MouseLeave(object sender, MouseEventArgs e)
         {
             ((Border)sender).Background = VisualManager.LeaveBrush;
+        }
+
+        private void HeaderClick(object sender, MouseButtonEventArgs e)
+        {
+            VisualManager.MoveWindow();
+        }
+
+        private void ShutDown(object sender, MouseButtonEventArgs e)
+        {
+            VisualManager.CloseWindow(false);
         }
         #endregion
     }

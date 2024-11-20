@@ -1,21 +1,28 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Diagnostics;
 using System.Drawing;
-using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Point = System.Windows.Point;
 
 namespace Sorting
 {
-    public partial class MainWindow : UserControl
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-
         List<SortMethods> SorthMethodsTable = new List<SortMethods>();
         int[] massiveInteger;
         double[] massiveDouble;
         byte sortType = 3;
+
+        private bool _isFullscreen;
 
         public MainWindow()
         {
@@ -24,7 +31,8 @@ namespace Sorting
             SetIamge();
         }
 
-        private void Generate_Random_Massive(object sender, System.Windows.Input.MouseButtonEventArgs e)
+
+        private void Generate_Random_Massive(object sender, MouseButtonEventArgs e)
         {
             CreateRandomMassiveWindow createRandomMassiveWindow = new CreateRandomMassiveWindow();
 
@@ -72,7 +80,7 @@ namespace Sorting
 
         private void MouseDown_RunTests(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            foreach(var method in SorthMethodsTable)
+            foreach (var method in SorthMethodsTable)
             {
                 bool asceding = bool.Parse(rbSortMinToMax.IsChecked.ToString());
                 switch (method.Sort_ID)
@@ -82,40 +90,60 @@ namespace Sorting
                             method.TemporaryFile = new TemporaryFile(Environment.CurrentDirectory);
                             dgResultTests.Items.Remove(method);
 
+                            Stopwatch st = new Stopwatch();
+
                             if (sortType == 0)
                             {
+                                st.Start();
                                 var result = Methods.BubbleSorting(massiveInteger, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
                             else
                             {
+                                st.Start();
                                 var result = Methods.BubbleSorting(massiveDouble, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
+
+                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
 
                             dgResultTests.Items.Add(method);
                             break;
                         }
                     case 1:
-                        {  
+                        {
                             method.TemporaryFile = new TemporaryFile(Environment.CurrentDirectory);
                             dgResultTests.Items.Remove(method);
-                           
+
+                            Stopwatch st = new Stopwatch();
+
                             if (sortType == 0)
                             {
+                                st.Start();
                                 var result = Methods.InsertionSort(massiveInteger, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
                             else
                             {
+                                st.Start();
                                 var result = Methods.InsertionSort(massiveDouble, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
-                            
+
+                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+
                             dgResultTests.Items.Add(method);
                             break;
                         }
@@ -124,18 +152,28 @@ namespace Sorting
                             method.TemporaryFile = new TemporaryFile(Environment.CurrentDirectory);
                             dgResultTests.Items.Remove(method);
 
+                            Stopwatch st = new Stopwatch();
+
                             if (sortType == 0)
                             {
+                                st.Start();
                                 var result = Methods.QuickSort(massiveInteger, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
                             else
                             {
+                                st.Start();
                                 var result = Methods.QuickSort(massiveDouble, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
+
+                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -145,18 +183,28 @@ namespace Sorting
                             method.TemporaryFile = new TemporaryFile(Environment.CurrentDirectory);
                             dgResultTests.Items.Remove(method);
 
+                            Stopwatch st = new Stopwatch();
+
                             if (sortType == 0)
                             {
+                                st.Start();
                                 var result = Methods.ShekerSort(massiveInteger, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
                             else
                             {
+                                st.Start();
                                 var result = Methods.ShekerSort(massiveDouble, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
+
+                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -166,25 +214,37 @@ namespace Sorting
                             method.TemporaryFile = new TemporaryFile(Environment.CurrentDirectory);
                             dgResultTests.Items.Remove(method);
 
+                            Stopwatch st = new Stopwatch();
+
                             if (sortType == 0)
                             {
+                                st.Start();
                                 var result = Methods.BozoSort(massiveInteger, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
                             else
                             {
+                                st.Start();
                                 var result = Methods.BozoSort(massiveDouble, asceding);
+                                st.Stop();
+
                                 method.CountIteration = result.Item1;
-                                File.WriteAllText(method.TemporaryFile.FilePath, string.Join("; ", result.Item2));
+                                File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
+                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+
                             dgResultTests.Items.Add(method);
-                            break;                         
+                            break;
                         }
                 }
             }
         }
+
+
 
         #region Работа с таблицой
         private void Checked_Method(object sender, RoutedEventArgs e)
@@ -225,7 +285,6 @@ namespace Sorting
         #endregion
 
         #region Визуал
-
         public void MouseEnter(object sender, MouseEventArgs e)
         {
             ((Border)sender).Background = VisualManager.EnterBrush;
@@ -286,6 +345,18 @@ namespace Sorting
             imGenerateRandomMassive.Source = Imaging.CreateBitmapSourceFromHBitmap(icon3.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon3.Width, icon3.Height));
             imReadFromFile.Source = Imaging.CreateBitmapSourceFromHBitmap(icon4.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon4.Width, icon4.Height));
             imReadFromExcel.Source = Imaging.CreateBitmapSourceFromHBitmap(icon5.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon5.Width, icon5.Height));
+
+
+            Bitmap icon7 = (Bitmap)resources.GetObject("shutdown.Image");
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = Imaging.CreateBitmapSourceFromHBitmap(icon7.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon7.Width, icon7.Height)); ;
+            BtnCloseWindow.Background = ib;
+            
+            Bitmap icon8 = (Bitmap)resources.GetObject("maximized.Image");
+            ImageBrush ib2 = new ImageBrush();
+            ib2.ImageSource = Imaging.CreateBitmapSourceFromHBitmap(icon8.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon8.Width, icon8.Height)); ;
+
+            BtnMaxSizeWindow.Background = ib2;
         }
         #endregion
 
@@ -328,6 +399,108 @@ namespace Sorting
                 }
             }
         }
+
+        private void WindowClosing(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TextMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void FullscreenButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            _isFullscreen = !_isFullscreen;
+            if (_isFullscreen)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void ButtonVisualization_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button != null)
+            {
+                SortMethods item = button.DataContext as SortMethods;
+                if (item != null)
+                {
+                    if (item.TemporaryFile != null && item.TemporaryFile.FilePath != null)
+                    {
+                        WindowVisualization readFromFileWindow = new WindowVisualization(massiveInteger, item.Sort_ID, bool.Parse(rbSortMinToMax.IsChecked.ToString()));
+
+                        if (readFromFileWindow.ShowDialog() == true)
+                        {
+                           
+                        }
+                    }
+                }
+            }
+        }
+
+        private static string MassiveToString(int[] array)
+        {
+            StringBuilder arrayString = new StringBuilder();
+            int columnIndex = 0;
+
+            foreach (int num in array)
+            {
+                // Выводим число, отформатированное с правым выравниванием
+                arrayString.Append(num.ToString().PadRight(3) + "; ");
+
+                // Переход на новую строку после каждой пятой колонки
+                columnIndex++;
+                if (columnIndex % 10 == 0)
+                {
+                    arrayString.AppendLine();
+                }
+            }
+
+            // Если массив не делится на 5, добавляем оставшиеся числа на новую строку
+            if (columnIndex % 10 != 0)
+            {
+                arrayString.AppendLine();
+            }
+
+            return arrayString.ToString();
+        }
+
+        private static string MassiveToString(double[] array)
+        {
+            StringBuilder arrayString = new StringBuilder();
+            int columnIndex = 0;
+
+            foreach (int num in array)
+            {
+                // Выводим число, отформатированное с правым выравниванием
+                arrayString.Append(num.ToString().PadRight(3) + "; ");
+
+                // Переход на новую строку после каждой пятой колонки
+                columnIndex++;
+                if (columnIndex % 10 == 0)
+                {
+                    arrayString.AppendLine();
+                }
+            }
+
+            // Если массив не делится на 5, добавляем оставшиеся числа на новую строку
+            if (columnIndex % 10 != 0)
+            {
+                arrayString.AppendLine();
+            }
+
+            return arrayString.ToString();
+        }
     }
 
     public class SortMethods
@@ -335,7 +508,7 @@ namespace Sorting
         public int Sort_ID { get; set; }
         public string Name { get; set; }
         public int CountIteration { get; set; }
-        public int TotalTimeSort { get; set; }
+        public double TotalTimeSort { get; set; }
         public TemporaryFile TemporaryFile { get; set; }
     }
 

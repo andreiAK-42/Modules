@@ -103,9 +103,29 @@ namespace Sorting {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap maximized_Image {
+            get {
+                object obj = ResourceManager.GetObject("maximized.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap random_Image {
             get {
                 object obj = ResourceManager.GetObject("random.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shutdown_Image {
+            get {
+                object obj = ResourceManager.GetObject("shutdown.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

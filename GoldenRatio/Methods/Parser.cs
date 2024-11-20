@@ -27,12 +27,12 @@ namespace GoldenRatio.Methods
                 Graphic.Add(new DataPoint(counterI, SolveFunc(func, counterI.ToString())));
             }
 
-            var plotModel = new PlotModel { Title = "График функции f(x)" };
+            var plotModel = new PlotModel { Title = "График функции f(x)", TextColor = OxyColor.FromRgb(255, 255, 255) };
 
             var xLine = new LineSeries
             {
                 Title = "X",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 255, 255),
                 StrokeThickness = 2
             };
 
@@ -42,7 +42,7 @@ namespace GoldenRatio.Methods
             var absicc = new LineSeries
             {
                 Title = "Y",
-                Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
+                Color = OxyColor.FromRgb(255, 255, 255), // Красный цвет
                 StrokeThickness = 2,
             };
 
@@ -53,7 +53,7 @@ namespace GoldenRatio.Methods
             var lineSeries = new LineSeries
             {
                 Title = "f(x)",
-                Color = OxyColor.FromRgb(0, 0, 255), // Синий цвет линии
+                Color = OxyColor.FromRgb(24, 239, 255), // Синий цвет линии
                 LineStyle = LineStyle.Dot
             };
 
@@ -65,9 +65,11 @@ namespace GoldenRatio.Methods
             plotModel.Series.Add(xLine);
             plotModel.Series.Add(absicc);
 
+
+
             // Отображаем график
             window.pvGraph.Model = plotModel;
-            window.pvGraph.DataContext = plotModel;        
+            window.pvGraph.DataContext = plotModel;
         }
 
         public void FindMinimum(MainWindow window)

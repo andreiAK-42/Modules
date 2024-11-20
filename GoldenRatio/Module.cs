@@ -8,10 +8,8 @@ namespace GoldenRatio
         public object Show()
         {
             var userControl = new MainWindow();
-            var content = userControl.Content;
-            userControl.Content = null;
 
-            return content;
+            return userControl;
         }
 
         public void Close()
