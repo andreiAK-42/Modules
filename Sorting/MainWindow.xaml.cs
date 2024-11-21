@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Point = System.Windows.Point;
 
 namespace Sorting
 {
@@ -55,7 +54,7 @@ namespace Sorting
             }
         }
 
-        private void MouseDown_ReadFromFile(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDown_ReadFromFile(object sender, MouseButtonEventArgs e)
         {
             ReadFromFileWindow readFromFileWindow = new ReadFromFileWindow();
 
@@ -78,8 +77,14 @@ namespace Sorting
             }
         }
 
-        private void MouseDown_RunTests(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDown_RunTests(object sender, MouseButtonEventArgs e)
         {
+            if (massiveInteger == null && massiveDouble == null)
+            {
+                MessageBox.Show("Массив не был сгенерирован.\nСначала сгенерируйте массив, потом запускайте тесты!");
+                return;
+            }
+
             foreach (var method in SorthMethodsTable)
             {
                 bool asceding = bool.Parse(rbSortMinToMax.IsChecked.ToString());
@@ -111,7 +116,7 @@ namespace Sorting
                                 File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
-                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+                            method.TotalTimeSort = st.Elapsed.TotalMilliseconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -142,7 +147,7 @@ namespace Sorting
                                 File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
-                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+                            method.TotalTimeSort = st.Elapsed.TotalMilliseconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -173,7 +178,7 @@ namespace Sorting
                                 File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
-                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+                            method.TotalTimeSort = st.Elapsed.TotalMilliseconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -204,7 +209,7 @@ namespace Sorting
                                 File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
-                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+                            method.TotalTimeSort = st.Elapsed.TotalMilliseconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -235,7 +240,7 @@ namespace Sorting
                                 File.WriteAllText(method.TemporaryFile.FilePath, MassiveToString(result.Item2));
                             }
 
-                            method.TotalTimeSort = st.Elapsed.TotalSeconds;
+                            method.TotalTimeSort = st.Elapsed.TotalMilliseconds;
 
                             dgResultTests.Items.Add(method);
                             break;
@@ -402,6 +407,7 @@ namespace Sorting
 
         private void WindowClosing(object sender, MouseButtonEventArgs e)
         {
+            TemporaryFileCleaner.Clear();
             this.Close();
         }
 

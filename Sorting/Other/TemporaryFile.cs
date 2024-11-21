@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 
 namespace Sorting
 {
@@ -29,6 +30,8 @@ namespace Sorting
         private void Create(string path)
         {
             FilePath = path;
+
+            TemporaryFileCleaner.TemporaryFiles.Add(path);
             using (File.Create(FilePath)) { };
         }
 
@@ -37,6 +40,19 @@ namespace Sorting
             if (FilePath == null) return;
             File.Delete(FilePath);
             FilePath = null;
+        }
+    }
+
+    public class TemporaryFileCleaner
+    {
+        public static List<string> TemporaryFiles = new List<string>();
+
+        public static void Clear()
+        {
+            foreach (var file in TemporaryFiles)
+            {
+                File.Delete(file);
+            }
         }
     }
 }

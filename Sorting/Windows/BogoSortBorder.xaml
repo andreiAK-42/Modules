@@ -5,11 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sorting"
         mc:Ignorable="d"
-        Title="BogoSortBorder" Height="265" Width="420">
+        Title="BogoSortBorder" 
+        Height="265" 
+        Width="420"
+        WindowStyle="None"
+        MinWidth="400"
+        MinHeight="250"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    
     <Grid>
-        <Label  Content="Ограничение на количество итераций" HorizontalAlignment="Left" Height="29" Margin="81,56,0,0" VerticalAlignment="Top" Width="244"/>
-        <TextBox x:Name="BogoSortBorderNumber" HorizontalAlignment="Left" Height="35" Margin="81,90,0,0" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="222"/>
-        <Button x:Name="Button" Content="Установить" HorizontalAlignment="Left" Height="28" Margin="303,211,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click"/>
+        
+        <Border Background="#1C1D31"
+            CornerRadius="25"
+            BorderThickness="2"
+            BorderBrush="White">
+        </Border>
 
+        <Label Content="Ограничение на количество итераций" Foreground="#0097FF" HorizontalAlignment="Center" Margin="0,56,0,0" FontSize="16" VerticalAlignment="Top"/>
+        <TextBox x:Name="BogoSortBorderNumber" HorizontalAlignment="Center" Height="35" Margin="0,90,0,0" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="222" VerticalContentAlignment="Center"/>
+        <Border x:Name="BorderCreateButton" BorderBrush="#0097FF" BorderThickness="1" CornerRadius="5" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="98" Margin="0,217,17,0" MouseLeave="MouseLeave" Cursor="Hand" MouseDown="MouseDowmSetBorderButton">
+            <Label Content="Установить" HorizontalAlignment="Center" Height="26" VerticalAlignment="Center" Foreground="#0097FF" Width="88" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+        </Border>
     </Grid>
 </Window>

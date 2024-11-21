@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Sorting
 {
@@ -8,13 +10,16 @@ namespace Sorting
     public partial class BogoSortBorder : Window
     {
         public int border = 10000;
+        VisualManager visualManager;
 
         public BogoSortBorder()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            visualManager = new VisualManager(this);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void MouseDowmSetBorderButton(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try
             {
@@ -27,6 +32,16 @@ namespace Sorting
 
             this.DialogResult = true;
             this.Close();
+        }
+
+        public void MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).Background = VisualManager.EnterBrush;
+        }
+
+        public void MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).Background = VisualManager.LeaveBrush;
         }
     }
 }
