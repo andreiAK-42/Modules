@@ -124,8 +124,8 @@ namespace Sorting
 
                 Sort(array, left, pivotIndex - 1, ascending);
                 Sort(array, pivotIndex + 1, right, ascending);
+                ++FastSortIterationCount;
             }
-            ++FastSortIterationCount;
         }
 
         private static int Partition(int[] array, int left, int right, bool ascending)
@@ -165,8 +165,8 @@ namespace Sorting
 
                 Sort(array, left, pivotIndex - 1, ascending);
                 Sort(array, pivotIndex + 1, right, ascending);
+                ++FastSortIterationCount;
             }
-            ++FastSortIterationCount;
         }
 
         private static int Partition(double[] array, int left, int right, bool ascending)

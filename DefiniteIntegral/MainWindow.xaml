@@ -1,0 +1,151 @@
+﻿<Window x:Class="DefiniteIntegral.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DefiniteIntegral"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="720"
+        Width="1220"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid x:Name="MainGrid">
+
+        <Border Background="#1C1D31"
+         CornerRadius="25"
+         BorderThickness="2"
+         BorderBrush="White"/>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140" />
+                <RowDefinition Height="140" />
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="170" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+
+            <Border x:Name="BtnCloseWindow" MouseDown="WindowClosing" Grid.Column="4" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50"  Width="50" Cursor="Hand" Margin="230,0,0,0">
+                <Border.Background>
+                    <ImageBrush ImageSource="/DefiniteIntegral;component/shutdown.png"/>
+                </Border.Background>
+            </Border>
+            <TextBlock Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Text="C H E R R Y  M A T H"
+                Foreground="#CDD7E0"
+                FontFamily="Oswald"
+                FontSize="36"
+                Margin="20, 50, 0, 0" MouseDown="TextMouseDown" />
+
+            <TextBlock Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Text="О П Р Е Д Е Л Ё Н Н Ы Й  И Н Т Е Г Р А Л"
+                Foreground="#A688C8"
+                FontFamily="Roboto"
+                FontSize="12"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0, 0, 218, 23"  />
+
+
+            <Border BorderThickness="1" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top" Width="120" Grid.Row="1" Margin="25,70,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                <Border.Background>
+                    <ImageBrush ImageSource="/DefiniteIntegral;component/интеграл.png"/>
+                </Border.Background>
+            </Border>
+
+            <TextBlock Grid.Row="1" Grid.Column="2" x:Name="labelFunction" TextWrapping="Wrap" VerticalAlignment="Top" Text="dx" FontFamily="Verdana" FontSize="56" Foreground="White" Margin="65,95,114,0" Grid.RowSpan="2"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbFunction" HorizontalAlignment="Right" Height="66" TextWrapping="Wrap" Text="Функция" VerticalAlignment="Top" Width="256" FontSize="22" Foreground="#FF333333" Margin="0,97,234,0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tba" HorizontalAlignment="Left" Height="32" TextWrapping="Wrap" Text="a" VerticalAlignment="Top" Width="44" FontSize="22" Foreground="#FF333333" Margin="3,55,0,0" TextAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbb" HorizontalAlignment="Right" Height="31" TextWrapping="Wrap" Text="b" VerticalAlignment="Bottom" Width="44" FontSize="22" Foreground="#FF333333"  Margin="0,0,211,75" TextAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="labeln" TextWrapping="Wrap" Text="n = " FontFamily="Verdana" FontSize="56" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="10,4,0,0"/>
+
+            <TextBox  x:Name="tbn" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="64" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="0.5" VerticalAlignment="Top" Width="86" FontSize="56" Foreground="#FF333333" Margin="124,10,0,0" Padding="0,-8,0,0">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <DataGrid Grid.Column="3" Grid.Row="1" x:Name="dgResultTests" IsReadOnly="True" AutoGenerateColumns="False" Height="240" VerticalAlignment="Top" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,34,0,0" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название метода" Binding="{Binding Name}" Width="200" />
+                    <DataGridTextColumn Header="Результат" Binding="{Binding Result}" Width="100" />
+
+                    <DataGridTemplateColumn Header="Визуализация">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="ButtonVisualization" Content="Открыть" Margin="5" Click="ButtonVisualization_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Grid.Column="4" Grid.Row="4" x:Name="buttonSolve" Content="Решить" HorizontalAlignment="Right" Height="41" VerticalAlignment="Bottom" Width="209" BorderBrush="White" Background="#FF2ACC34" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Pen" RenderTransformOrigin="0,0" Click="buttonSolve_Click" >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+
+            <CheckBox Content="Метод прямоугольников" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <CheckBox Content="Метод трапеций" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Unchecked="AddOrDeleteMethodFromTable" Checked="AddOrDeleteMethodFromTable">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <CheckBox Content="Метод Симпсона" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+        </Grid>
+
+    </Grid>
+</Window>

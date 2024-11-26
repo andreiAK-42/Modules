@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenRatio", "GoldenRatio\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newton", "Newton\Newton.csproj", "{3FD6AA21-6AED-4A06-A495-C5D1D024AF9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sorting", "Sorting\Sorting.csproj", "{3B0651D0-F253-4FC7-BA1C-3CB7512C9CBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sorting", "Sorting\Sorting.csproj", "{3B0651D0-F253-4FC7-BA1C-3CB7512C9CBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefiniteIntegral", "DefiniteIntegral\DefiniteIntegral.csproj", "{34E58354-1E55-4C78-B9C7-ECDF18E5117B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3B0651D0-F253-4FC7-BA1C-3CB7512C9CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B0651D0-F253-4FC7-BA1C-3CB7512C9CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B0651D0-F253-4FC7-BA1C-3CB7512C9CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E58354-1E55-4C78-B9C7-ECDF18E5117B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E58354-1E55-4C78-B9C7-ECDF18E5117B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E58354-1E55-4C78-B9C7-ECDF18E5117B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E58354-1E55-4C78-B9C7-ECDF18E5117B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
