@@ -95,7 +95,7 @@
 
             <TextBlock Grid.Row="3" Grid.Column="1" x:Name="labeln" TextWrapping="Wrap" Text="n = " FontFamily="Verdana" FontSize="56" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="10,4,0,0"/>
 
-            <TextBox  x:Name="tbn" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="64" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="0.5" VerticalAlignment="Top" Width="86" FontSize="56" Foreground="#FF333333" Margin="124,10,0,0" Padding="0,-8,0,0">
+            <TextBox  x:Name="tbn" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="64" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="6" VerticalAlignment="Top" Width="86" FontSize="56" Foreground="#FF333333" Margin="124,10,0,0" Padding="0,-8,0,0">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -127,23 +127,31 @@
             </Button>
 
 
-            <CheckBox Content="Метод прямоугольников" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
+            <CheckBox Content="Метод прямоугольников" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
 
-            <CheckBox Content="Метод трапеций" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Unchecked="AddOrDeleteMethodFromTable" Checked="AddOrDeleteMethodFromTable">
+            <CheckBox Content="Метод трапеций" Foreground="White" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Unchecked="AddOrDeleteMethodFromTable" Checked="AddOrDeleteMethodFromTable">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
 
-            <CheckBox Content="Метод Симпсона" Foreground="White" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
+            <CheckBox Content="Метод Симпсона" Foreground="White" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Checked="AddOrDeleteMethodFromTable" Unchecked="AddOrDeleteMethodFromTable">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
+            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="labele" TextWrapping="Wrap" Text="eps = " FontFamily="Verdana" FontSize="56" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="10,77,0,0" Grid.RowSpan="2"/>
+            <TextBox  x:Name="tbeps" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="64" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="0,01" VerticalAlignment="Top" Width="187" FontSize="56" Foreground="#FF333333" Margin="184,81,0,0" Padding="0,-8,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
 
         </Grid>
 

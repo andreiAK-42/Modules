@@ -26,7 +26,7 @@ namespace DefiniteIntegral
                         {
                             var item = ItegralMethodsItem.Find(x => x.Name == "Метод прямоугольников");
 
-                            double result = ParserSolver.RectangleMethodOnly(this);
+                            double result = ParserSolver.RectangleMethodOnly(this).Cut(tbeps.Text.Length - 2);
 
                             dgResultTests.Items.Remove(item);
 
@@ -45,7 +45,7 @@ namespace DefiniteIntegral
                         {
                             var item = ItegralMethodsItem.Find(x => x.Name == "Метод трапеций");
 
-                            double result = ParserSolver.TrapezoidMethodOnly(this);
+                            double result = ParserSolver.TrapezoidMethodOnly(this).Cut(tbeps.Text.Length - 2);
 
                             dgResultTests.Items.Remove(item);
 
@@ -63,7 +63,7 @@ namespace DefiniteIntegral
                         {
                             var item = ItegralMethodsItem.Find(x => x.Name == "Метод Симпсона");
 
-                            double result = ParserSolver.SimpsonMethodOnly(this);
+                            double result = ParserSolver.SimpsonMethodOnly(this).Cut(tbeps.Text.Length - 2);
 
                             dgResultTests.Items.Remove(item);
 
@@ -148,5 +148,13 @@ namespace DefiniteIntegral
     {
         public string Name { get; set; }
         public double Result { get; set; }
+    }
+
+    public static class DoubleExtension
+    {
+        public static double Cut(this double dbl, int eps)
+        {
+            return Math.Round(dbl, eps);
+        }
     }
 }
