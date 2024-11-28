@@ -2,7 +2,6 @@
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
-using System.Windows;
 using OxyPlot.Annotations;
 
 namespace DefiniteIntegral.Methods
@@ -38,16 +37,6 @@ namespace DefiniteIntegral.Methods
 
             xLine.Points.Add(new DataPoint(a, 0));
             xLine.Points.Add(new DataPoint(b, 0));
-
-          /*  var absicc = new LineSeries
-            {
-                Title = "Y",
-                Color = OxyColor.FromRgb(255, 255, 255), // Красный цвет
-                StrokeThickness = 2,
-            };
-
-            absicc.Points.Add(new DataPoint(0, maxY));
-            absicc.Points.Add(new DataPoint(0, minY));*/
 
             // Создаем серию точек графика
             var lineSeries = new LineSeries
@@ -122,7 +111,7 @@ namespace DefiniteIntegral.Methods
 
         public double SolveFunc(Function function, string x)
         {
-            return new org.mariuszgromada.math.mxparser.Expression($"f({x})", function).calculate();
+            return new Expression($"f({x})", function).calculate();
         }
 
 
@@ -180,7 +169,7 @@ namespace DefiniteIntegral.Methods
                 resultSolver = SolveFunc(func, x);
                 resultSolverWithN = resultSolver * h;
 
-                result += resultSolverWithN;
+                result += Math.Abs(resultSolverWithN);
                 counterI += h;
             }
 
@@ -214,7 +203,7 @@ namespace DefiniteIntegral.Methods
 
             while (counterJ <= solvePoints.Count - 2)
             {
-                sumOddNumbers += solvePoints[counterJ];
+                sumOddNumbers += Math.Abs(solvePoints[counterJ]);
 
                 counterJ += 2;
             }
@@ -225,7 +214,7 @@ namespace DefiniteIntegral.Methods
             int counterB = 2;
             while (counterB <= solvePoints.Count - 2)
             {
-                sumEvenNumbers += solvePoints[counterB];
+                sumEvenNumbers += Math.Abs(solvePoints[counterB]);
 
                 counterB += 2;
             }
@@ -252,7 +241,7 @@ namespace DefiniteIntegral.Methods
             while (counterI <= intervalParse.Item2)
             {
                 x = counterI.ToString().Replace(",", ".");
-                solvePoints.Add(SolveFunc(func, x));
+                solvePoints.Add(Math.Abs(SolveFunc(func, x)));
 
                 counterI += h;
             }
@@ -262,7 +251,7 @@ namespace DefiniteIntegral.Methods
 
             while (counterJ <= solvePoints.Count - 2)
             {
-                sumOddNumbers += solvePoints[counterJ];
+                sumOddNumbers += Math.Abs(solvePoints[counterJ]);
 
                 counterJ += 2;
             }
@@ -273,7 +262,7 @@ namespace DefiniteIntegral.Methods
             int counterB = 2;
             while (counterB <= solvePoints.Count - 2)
             {
-                sumEvenNumbers += solvePoints[counterB];
+                sumEvenNumbers += Math.Abs(solvePoints[counterB]);
 
                 counterB += 2;
             }
@@ -352,7 +341,7 @@ namespace DefiniteIntegral.Methods
                 solveFunc1 = (SolveFunc(func, x1));
                 solveFunc2 = SolveFunc(func, x2);
 
-                result += (((solveFunc1 + solveFunc2) / 2) * h);
+                result += Math.Abs((((solveFunc1 + solveFunc2) / 2) * h));
                 counterI += h;
             }
             return result;
