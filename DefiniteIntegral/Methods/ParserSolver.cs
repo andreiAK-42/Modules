@@ -3,6 +3,7 @@ using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
 using OxyPlot.Annotations;
+using System.Diagnostics.Metrics;
 
 namespace DefiniteIntegral.Methods
 {
@@ -19,9 +20,9 @@ namespace DefiniteIntegral.Methods
 
             CurrentFunc = function;
 
-            for (int counterI = a; counterI <= b; ++counterI)
+            for (double counterI = a; counterI <= b; counterI += 0.5)
             {
-                Graphic.Add(new DataPoint(counterI, SolveFunc(func, counterI.ToString())));
+                Graphic.Add(new DataPoint(counterI, SolveFunc(func, counterI.ToString().Replace(",", "."))));
             }
 
             var plotModel = new PlotModel { Title = "График функции f(x)", TextColor = OxyColor.FromRgb(255, 255, 255) };
@@ -186,42 +187,70 @@ namespace DefiniteIntegral.Methods
             double result = 0;
 
             Function func = new Function("f(x) = " + function.Replace(",", "."));
+            double counterI = a + h;
 
-            double counterI = a;
-            string x = "";
+            string x1 = ""; // X i-1
+            string x2 = ""; // Xi
+            string x3 = ""; // Xi
+
+            double solveFunc1 = 0;
+            double solveFunc2 = 0;
+            double solveFuncHalf = 0;
 
             while (counterI <= b)
             {
-                x = counterI.ToString().Replace(",", ".");
-                solvePoints.Add(SolveFunc(func, x));
+                x1 = (a).ToString().Replace(",", ".");
+                x2 = (a + h).ToString().Replace(",", ".");
+                x3 = (a + (h / 2)).ToString().Replace(",", ".");
+
+                var polygon = new PolygonAnnotation();
+
+                double x1Double = double.Parse(x1.Replace(".", ","));
+                Function func2 = new Function("f(x) = " + function.Replace(",", "."));
+                var parabole = new List<(double x, double y)>();
+
+
+                parabole = GenerateParabolaPoints(a, a + h, 10, SolveFunc(func, (a + (h / 2)).ToString().Replace(",", ".")));
+ 
+
+                for (int counterJ = 0; counterJ <= parabole.Count - 1; ++counterJ)
+                {
+                    polygon.Points.Add(new DataPoint(parabole[counterJ].x, parabole[counterJ].y));
+                }
+ 
+                model.Annotations.Add(polygon);
 
                 counterI += h;
+                a += h;
             }
+        }
 
-            double sumOddNumbers = 0;
-            int counterJ = 1;
+        public static List<(double x, double y)> GenerateParabolaPoints(double a, double b, int numPoints, double conditionValue)
+        {
+            double center = (a + b) / 2;
+            double width = b - a;
+            double step = width / (numPoints - 1);
+            double parabolaA;
 
-            while (counterJ <= solvePoints.Count - 2)
+            // Определение коэффициента "a" в зависимости от условия
+            if (conditionValue < 0) // Условие для параболы вниз
             {
-                sumOddNumbers += Math.Abs(solvePoints[counterJ]);
-
-                counterJ += 2;
+                parabolaA = 4 / (width * width); // Знак "+" чтобы парабола строилась вниз
             }
-
-            double resultOddNumber = 4 * sumOddNumbers;
-
-            double sumEvenNumbers = 0;
-            int counterB = 2;
-            while (counterB <= solvePoints.Count - 2)
+            else
             {
-                sumEvenNumbers += Math.Abs(solvePoints[counterB]);
-
-                counterB += 2;
+                parabolaA = -4 / (width * width); // Знак "-" чтобы парабола строилась вверх
             }
 
-            double resultEvenNumber = 2 * sumEvenNumbers;
+            List<(double x, double y)> points = new List<(double x, double y)>();
+            for (int i = 0; i < numPoints; i++)
+            {
+                double x = a + i * step;
+                double y = parabolaA * Math.Pow(x - center, 2) + (conditionValue < 0 ? -1 : 1); // Убрали "+ 1"
+                points.Add((x, y));
+            }
 
-            result = (h / 3) * ((solvePoints[0] + solvePoints[solvePoints.Count - 1]) + resultEvenNumber + resultOddNumber);
+            return points;
         }
 
         public double SimpsonMethodOnly(MainWindow window)
@@ -295,7 +324,7 @@ namespace DefiniteIntegral.Methods
                 x1 = (counterI - h).ToString().Replace(",", ".");
                 x2 = counterI.ToString().Replace(",", ".");
 
-                solveFunc1 = (SolveFunc(func, x1));
+                solveFunc1 = SolveFunc(func, x1);
                 solveFunc2 = SolveFunc(func, x2);
 
                 var polygon = new PolygonAnnotation();
