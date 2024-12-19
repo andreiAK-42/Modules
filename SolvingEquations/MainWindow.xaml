@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolvingEquations"
+        xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="720"
@@ -52,7 +53,9 @@
            FontSize="36"
            Margin="20, 50, 0, 0" MouseDown="TextMouseDown" />
 
-            <TextBlock Grid.Row="0"
+
+
+           <TextBlock Grid.Row="0"
            Grid.Column="1"
            Grid.ColumnSpan="2"
            Text="Р Е Ш Е Н И Е  У Р А В Н Е Н И Й"
@@ -86,14 +89,13 @@
             </DataGrid>
 
 
-            <TextBox Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2"  x:Name="tbMassiveVisualisation" HorizontalAlignment="Center" VerticalAlignment="Center" Height="170" TextWrapping="Wrap" Text="Массив" Width="560"  Background="#FF1C1D31" Foreground="#FF0097FF" BorderThickness="2" FontSize="16" Visibility="Hidden">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
 
+            <ScrollViewer Grid.Row="4" Grid.Column="2" HorizontalScrollBarVisibility="Visible" Grid.ColumnSpan="2" FontSize="16" Margin="0, 10, 10, 0">
+                <StackPanel x:Name="formulasPanel" >
+                </StackPanel>
+            </ScrollViewer>
+
+           
             <Border Grid.Column="4" Grid.Row="4" x:Name="BorderRunTests" Margin="0,0,25,44" BorderBrush="#0097FF" CornerRadius="10" BorderThickness="2" Cursor="Hand" HorizontalAlignment="Right" Width="146" Height="50" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.RowSpan="2" MouseDown="btn_Solve">
                 <Label Content="Запустить тесты!" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="29" VerticalAlignment="Center" Width="115" Padding="0,0,0,0" UseLayoutRounding="True" Foreground="#0097FF" FontSize="16"/>
             </Border>

@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Data;
 using SolvingEquations.Methods;
+using static XamlMath.Rendering.Transformations.Transformation;
+using WpfMath.Controls;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace SolvingEquations
 {
@@ -161,6 +164,7 @@ namespace SolvingEquations
 
             double[][] copySquare = new double[Matrix.Length][];
             double[] copyRightPart = new double[RightPart.Length];
+            double[]? arguments = null;
 
             for (var counterI = 0; counterI < Matrix.Length; ++counterI)
             {
@@ -176,11 +180,22 @@ namespace SolvingEquations
             if (rbGauss.IsChecked == true)
             {
                 gausMethod.SolveGauss();
+
+                arguments = gausMethod.Answer;
+
                 LoadDGMatrix(gausMethod.Matrix, gausMethod.Answer);
             }
             else if (rbGaussJordan.IsChecked == true) 
             {
                 gausMethod.SolveGaussJordan();
+
+                arguments = new double[Matrix.Length];
+
+                for (var counterI = 0; counterI < Matrix.Length; ++counterI)
+                {
+                    arguments[counterI] = gausMethod.Answer[counterI];
+                }
+
                 LoadDGMatrix(gausMethod.Matrix, null);
             }
             else
@@ -195,7 +210,45 @@ namespace SolvingEquations
                 }
 
                 double[] solution = Cramer.Solve(cramerMatrix);
+                arguments = solution;
+
                 LoadDGMatrix(Matrix, solution);
+            }
+
+            formulasPanel.Children.Clear();
+
+            for (var counterI = 0; counterI < Matrix.Length; ++counterI)
+            {
+                string yravnenie = "";
+                for (int counterJ = 0; counterJ < Matrix.Length; ++counterJ)
+                {
+                    if (Matrix[counterI][counterJ] == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (Matrix[counterI][counterJ] > 0 && yravnenie != "")
+                        {
+                            yravnenie += $"+ {Matrix[counterI][counterJ]} * ({arguments[counterI]}) ";
+                        }
+                        else
+                        {
+                            yravnenie += $"{Matrix[counterI][counterJ]} * ({arguments[counterI]}) ";
+                        }
+                    }
+                }
+
+
+                yravnenie += "= " + RightPart[counterI];
+
+                FormulaControl formulaControl = new FormulaControl();
+                formulaControl.Formula = yravnenie;
+                formulaControl.Foreground = Brushes.White;
+                formulaControl.FontSize = 16;
+                formulasPanel.Children.Add(formulaControl);
+
+                arguments[counterI] = Matrix[counterI][Matrix[counterI].Length - 1];
             }
         }
 
@@ -203,5 +256,6 @@ namespace SolvingEquations
         {
 
         }
+
     }
 }
