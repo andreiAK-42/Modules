@@ -111,7 +111,7 @@ namespace SolvingEquations
                 // Find the longest row so we create enough columns
                 var max = matrix.Max(c => c.Count());
 
-                for (var i = 0; i < max + 1; i++)
+                for (var i = 0; i < (rightPart == null ? max : max + 1); i++)
                 {
                     if (i == max)
                     {
@@ -136,13 +136,21 @@ namespace SolvingEquations
 
                 double[][] resultMatrix = new double[matrix.Length][];
 
-                for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
+                if (rightPart == null)
                 {
-                    resultMatrix[counterI] = new double[matrix.Length + 1];
-                    matrix[counterI].CopyTo(resultMatrix[counterI], 0);
-                    resultMatrix[counterI][resultMatrix[counterI].Length - 1] = rightPart[counterI];
+                    resultMatrix = matrix;
                 }
+                else
+                {
 
+                    for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
+                    {
+                        resultMatrix[counterI] = new double[matrix.Length + 1];
+                        matrix[counterI].CopyTo(resultMatrix[counterI], 0);
+                        resultMatrix[counterI][resultMatrix[counterI].Length - 1] = rightPart[counterI];
+                    }
+                }
+               
                 dgResult.ItemsSource = resultMatrix;
             }
         }
@@ -150,12 +158,50 @@ namespace SolvingEquations
         private void btn_Solve(object sender, MouseButtonEventArgs e)
         {
             GausMethod gausMethod = new GausMethod((uint)Matrix[0].Length, (uint)Matrix[0].Length);
-            gausMethod.Matrix = Matrix;
-            gausMethod.RightPart = RightPart;
 
-            gausMethod.SolveMatrix();
+            double[][] copySquare = new double[Matrix.Length][];
+            double[] copyRightPart = new double[RightPart.Length];
 
-            LoadDGMatrix(gausMethod.Matrix, gausMethod.Answer);
+            for (var counterI = 0; counterI < Matrix.Length; ++counterI)
+            {
+                copySquare[counterI] = new double[Matrix.Length];
+                Matrix[counterI].CopyTo(copySquare[counterI], 0);
+            }
+
+            RightPart.CopyTo(copyRightPart, 0);
+
+            gausMethod.Matrix = copySquare;
+            gausMethod.RightPart = copyRightPart;
+
+            if (rbGauss.IsChecked == true)
+            {
+                gausMethod.SolveGauss();
+                LoadDGMatrix(gausMethod.Matrix, gausMethod.Answer);
+            }
+            else if (rbGaussJordan.IsChecked == true) 
+            {
+                gausMethod.SolveGaussJordan();
+                LoadDGMatrix(gausMethod.Matrix, null);
+            }
+            else
+            {
+                double[][] cramerMatrix = new double[Matrix.Length][];
+
+                for (var counterI = 0; counterI < Matrix.Length; ++counterI)
+                {
+                    cramerMatrix[counterI] = new double[Matrix.Length + 1];
+                    Matrix[counterI].CopyTo(cramerMatrix[counterI], 0);
+                    cramerMatrix[counterI][cramerMatrix[counterI].Length - 1] = RightPart[counterI];
+                }
+
+                double[] solution = Cramer.Solve(cramerMatrix);
+                LoadDGMatrix(Matrix, solution);
+            }
+        }
+
+        private void rbGauss_Копировать_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

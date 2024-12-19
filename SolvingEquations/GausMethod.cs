@@ -59,7 +59,7 @@
             }
         }
 
-        public int SolveMatrix()
+        public int SolveGauss()
         {
             if (RowCount != ColumCount)
                 return 1; //нет решения
@@ -99,6 +99,77 @@
             }
             return 0;
         }
+
+        public int SolveGaussJordan()
+        {
+            double[][] matrix = new double[Matrix.Length][];
+
+            for (var counterI = 0; counterI < matrix.Length; ++counterI)
+            {
+                matrix[counterI] = new double[matrix.Length + 1];
+                Matrix[counterI].CopyTo(matrix[counterI], 0);
+                matrix[counterI][matrix[counterI].Length - 1] = RightPart[counterI];
+            }
+
+            int n = matrix.Length;
+
+            // Прямой ход (приведение к ступенчатому виду)
+            for (int k = 0; k < n; k++)
+            {
+                // Поиск опорного элемента (ведущего элемента) в столбце
+                int maxRow = k;
+                for (int i = k + 1; i < n; i++)
+                {
+                    if (Math.Abs(matrix[i][k]) > Math.Abs(matrix[maxRow][k]))
+                    {
+                        maxRow = i;
+                    }
+                }
+
+                // Меняем строки местами, если опорный элемент не на k-й строке
+                if (maxRow != k)
+                {
+                    for (int i = 0; i <= n; i++)
+                    {
+                        double temp = matrix[k][i];
+                        matrix[k][i] = matrix[maxRow][i];
+                        matrix[maxRow][i] = temp;
+                    }
+                }
+                // Делаем опорный элемент равным 1
+                double pivot = matrix[k][k];
+                if (Math.Abs(pivot) < 1e-8)
+                {
+                    throw new ArgumentException("The system of equations has no unique solution or no solution.");
+                }
+                for (int i = k; i <= n; i++)
+                {
+                    matrix[k][i] /= pivot;
+                }
+
+                // Обнуляем все элементы столбца выше и ниже опорного
+                for (int i = 0; i < n; i++)
+                {
+                    if (i != k)
+                    {
+                        double factor = matrix[i][k];
+                        for (int j = k; j <= n; j++)
+                        {
+                            matrix[i][j] -= factor * matrix[k][j];
+                        }
+                    }
+                }
+            }
+            Matrix = matrix;
+            double[] x = new double[n];
+            for (int m = 0; m < n; m++)
+            {
+                x[m] = matrix[m][n];
+            }
+            Answer = x;
+            return 1;
+        }
+
         public override String ToString()
         {
             String S = "";
