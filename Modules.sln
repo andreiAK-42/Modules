@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sorting", "Sorting\Sorting.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefiniteIntegral", "DefiniteIntegral\DefiniteIntegral.csproj", "{34E58354-1E55-4C78-B9C7-ECDF18E5117B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvingEquations", "SolvingEquations\SolvingEquations.csproj", "{3CD572B5-31CB-426E-8C3B-F16AF674B173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolvingEquations", "SolvingEquations\SolvingEquations.csproj", "{3CD572B5-31CB-426E-8C3B-F16AF674B173}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLS", "MLS\MLS.csproj", "{8653CE0B-59EC-41BA-8346-D3B5F794E320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3CD572B5-31CB-426E-8C3B-F16AF674B173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CD572B5-31CB-426E-8C3B-F16AF674B173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CD572B5-31CB-426E-8C3B-F16AF674B173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8653CE0B-59EC-41BA-8346-D3B5F794E320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8653CE0B-59EC-41BA-8346-D3B5F794E320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8653CE0B-59EC-41BA-8346-D3B5F794E320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8653CE0B-59EC-41BA-8346-D3B5F794E320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

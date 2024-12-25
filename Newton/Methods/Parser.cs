@@ -11,7 +11,7 @@ namespace Newton.Methods
         private List<DataPoint> Graphic = new List<DataPoint>();
         private const int MaxIterations = 100;
 
-        public void GetFunction(MainWindow window, string function)
+        public void GetFunction(MWindow window, string function)
         {
             Graphic.Clear();
 
@@ -63,7 +63,7 @@ namespace Newton.Methods
             window.pvGraph.DataContext = plotModel;
         }
 
-        public void FindRoot(MainWindow window)
+        public void FindRoot(MWindow window)
         {
             Function func = new Function("f(x) = " + window.tbFunction.Text);
             string fder = FindDerivative(window.tbFunction.Text);
@@ -106,7 +106,7 @@ namespace Newton.Methods
             SafeInput.ShowMessage($"Результат:\n Корень = {resultX}", MessageBoxImage.Information);
         }
 
-        public void FindMinMax(MainWindow window)
+        public void FindMinMax(MWindow window)
         {
             Function func = new Function("f(x) = " + window.tbFunction.Text);
             string fder = FindDerivative(window.tbFunction.Text);

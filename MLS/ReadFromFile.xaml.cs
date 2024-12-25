@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using SolvingEquations.Windows;
 using System.Drawing;
 using System.IO;
 using System.Windows;
@@ -8,12 +7,11 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace SolvingEquations
+namespace MLS
 {
     public partial class ReadFromFile : Window
     {
         public double[][] Matrix;
-        public double[] RightPart;
         VisualManager VisualManager;
 
         public ReadFromFile()
@@ -43,21 +41,13 @@ namespace SolvingEquations
             try
             {
                 var lines = File.ReadAllLines(this.tbFilePath.Text);
-                Matrix = new double[lines.Length][];
+                Matrix = new double[2][];
 
-                for (int counterI = 0; counterI < lines.Length; ++counterI)
+                for (int counterI = 0; counterI != 2; ++counterI)
                 {
                     var parts = lines[counterI].Split(tbSplitSymbol.Text, StringSplitOptions.RemoveEmptyEntries);
 
-                    Matrix[counterI] = parts.Take(parts.Length - 1).Select(x => double.Parse(x)).ToArray();
-                }
-
-                var parts2 = lines[0].Split(";", StringSplitOptions.RemoveEmptyEntries);
-                RightPart = new double[parts2.Length];
-
-                for (int counterI = 0; counterI < lines.Length; ++counterI)
-                {
-                    RightPart[counterI] = double.Parse(lines[counterI].Split(";")[parts2.Length - 1]);
+                    Matrix[counterI] = parts.Select(x => double.Parse(x)).ToArray();
                 }
 
                 this.DialogResult = true;

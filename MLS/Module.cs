@@ -1,13 +1,13 @@
 ﻿using Interface;
 using System.Drawing;
 
-namespace Newton
+namespace MLS
 {
     class Module : IModule
     {
         public object Show()
         {
-            var userControl = new MWindow();
+            var userControl = new MainWindow();
 
             return userControl;
         }
@@ -18,7 +18,7 @@ namespace Newton
 
         public string GetModuleName()
         {
-            return "Метод Ньютона";
+            return "Метод наим. квадратов";
         }
 
         public Bitmap GetIcon()

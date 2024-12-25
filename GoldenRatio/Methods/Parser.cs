@@ -10,15 +10,12 @@ namespace GoldenRatio.Methods
         private static double Phi = (1 + Math.Sqrt(5)) / 2;
 
         private List<DataPoint> Graphic = new List<DataPoint>();
-        private string CurrentFunc = "";
 
         public void GetFunction(MainWindow window, string function)
         {
             Graphic.Clear();
 
             Function func = new Function("f(x) = " + function);
-
-            CurrentFunc = function;
 
             var intervalParse = SafeInput.GetSafeInterval(window);
 

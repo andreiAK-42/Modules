@@ -4,7 +4,7 @@ namespace Newton.Methods
 {
     public class SafeInput
     {
-        public static (int, int) GetSafeInterval(MainWindow window)
+        public static (int, int) GetSafeInterval(MWindow window)
         {
             if (window.tbXStart.Text == "Min" || window.tbXEnd.Text == "Max")
             {
@@ -32,7 +32,7 @@ namespace Newton.Methods
             }
         }
 
-        public static (double, double) GetSafeIntervalAB(MainWindow window)
+        public static (double, double) GetSafeIntervalAB(MWindow window)
         {
             if (window.tba.Text == "Min" || window.tbb.Text == "Max")
             {

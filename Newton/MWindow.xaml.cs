@@ -1,16 +1,14 @@
-using Newton.Methods;
+﻿using Newton.Methods;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Newton
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : UserControl
+    public partial class MWindow : Window
     {
         Parser Graph { get; set; }
-        public MainWindow()
+        public MWindow()
         {
             InitializeComponent();
             Graph = new Parser();
@@ -37,6 +35,19 @@ namespace Newton
         private void tba_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void WindowClosing(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TextMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

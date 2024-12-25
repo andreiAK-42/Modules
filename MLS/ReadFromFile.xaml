@@ -1,0 +1,57 @@
+﻿<Window x:Class="MLS.ReadFromFile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLS"
+        mc:Ignorable="d"
+        Title="Чтение из файла" 
+        Height="270" 
+        Width="420" 
+        ResizeMode="NoResize"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Height="240">
+        <Border Background="#1C1D31"
+                CornerRadius="25"
+                BorderThickness="2"
+                BorderBrush="White">
+        </Border>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="105" />
+                <ColumnDefinition Width="95" />
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="110" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54" />
+                <RowDefinition Height="54" />
+                <RowDefinition Height="54"/>
+                <RowDefinition Height="94"/>
+                <RowDefinition Height="14" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Разделитель" HorizontalAlignment="Left" Foreground="#0097FF" Height="30" VerticalAlignment="Top" Padding="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="12,24,0,0" FontSize="16"/>
+            <TextBox x:Name="tbSplitSymbol" Grid.Row="1" Background="#1C1D31" BorderBrush="#0097FF" Foreground="#0097FF" HorizontalAlignment="Center" Height="31" TextWrapping="Wrap" Text=";" VerticalAlignment="Top" Width="24" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" MaxLength="1" IsUndoEnabled="False"/>
+            <Border x:Name="borderSelectFile" Grid.Column="2" Grid.Row="3"  BorderBrush="#0097FF" CornerRadius="10" BorderThickness="1" MouseDown="MouseDown_SelectFile" VerticalAlignment="Center" MouseEnter="MouseEnter" MouseLeave="MouseLeave" HorizontalAlignment="Center" Width="98" Height="32" >
+                <Label Content="Выбрать" Foreground="#0097FF" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0" Margin="-1,-1,-1,-1"/>
+            </Border>
+            <Border x:Name="borderCreateMassive" BorderBrush="#0097FF" Grid.Column="3" Grid.Row="3" CornerRadius="10" BorderThickness="1" MouseDown="MouseDown_CreateMassive" MouseEnter="MouseEnter" MouseLeave="MouseLeave" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left" Width="98" >
+                <Label Content="Создать" Foreground="#0097FF" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0" Margin="-1,-1,-1,-1"/>
+            </Border>
+            <Label Content="Выбранный файл" Padding="0,0,0,0" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Right" Foreground="#0097FF" VerticalAlignment="Top" HorizontalContentAlignment="Center" Margin="0,0,60,0"  Grid.ColumnSpan="2" FontSize="16"/>
+            <TextBox x:Name="tbFilePath" Grid.Row="2" Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="#0097FF" Height="30" TextWrapping="Wrap" Text="Здесь появится путь до файла" Width="380" Background="{x:Null}" SelectionTextBrush="{x:Null}" BorderBrush="{x:Null}" VerticalContentAlignment="Center" UseLayoutRounding="False" Grid.ColumnSpan="4" Margin="10,0,0,0" FontSize="16"/>
+
+            <Border x:Name="Header" Grid.Column="0" Grid.Row="0" Background="Transparent" Grid.ColumnSpan="4" Height="23" VerticalAlignment="Top" Margin="0,0,0,0" MouseDown="HeaderClick" >
+                <Image x:Name="shutdown" Width="32" Height="32" Margin="365,9,23,-18" Cursor="Hand" MouseDown="ShutDown">
+                </Image>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

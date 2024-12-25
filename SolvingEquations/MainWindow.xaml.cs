@@ -6,16 +6,11 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Data;
-using SolvingEquations.Methods;
-using static XamlMath.Rendering.Transformations.Transformation;
 using WpfMath.Controls;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace SolvingEquations
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         double[][] Matrix;
@@ -29,25 +24,7 @@ namespace SolvingEquations
 
         private void Generate_Random_Massive(object sender, MouseButtonEventArgs e)
         {
-           /* CreateRandomMassiveWindow createRandomMassiveWindow = new CreateRandomMassiveWindow();
 
-            if (createRandomMassiveWindow.ShowDialog() == true)
-            {
-                sortType = createRandomMassiveWindow.SortType;
-
-                if (sortType == 0)
-                {
-                    massiveInteger = createRandomMassiveWindow.MassiveInteger;
-                    tbMassiveVisualisation.Text = string.Join("; ", massiveInteger);
-                    tbMassiveVisualisation.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    massiveDouble = createRandomMassiveWindow.MassiveDouble;
-                    tbMassiveVisualisation.Text = string.Join("; ", massiveDouble);
-                    tbMassiveVisualisation.Visibility = Visibility.Visible;
-                }
-            }*/
         }
 
         private void MouseDown_ReadFromFile(object sender, MouseButtonEventArgs e)
@@ -59,10 +36,9 @@ namespace SolvingEquations
                 Matrix = readFromFileWindow.Matrix;
                 RightPart = readFromFileWindow.RightPart;
 
-                LoadDGMatrix(Matrix, RightPart);
+                LoadMatrix(Matrix, RightPart);
             }
         }
-
 
         private void WindowClosing(object sender, MouseButtonEventArgs e)
         {
@@ -80,49 +56,35 @@ namespace SolvingEquations
         public void SetIamge()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Resource));
-            Bitmap icon = (Bitmap)resources.GetObject("sort_icon.Image");
-
-           
-            Bitmap icon3 = (Bitmap)resources.GetObject("random.Image");
             Bitmap icon4 = (Bitmap)resources.GetObject("file.Image");
-            Bitmap icon5 = (Bitmap)resources.GetObject("excel.Image");
 
-            imGenerateRandomMassive.Source = Imaging.CreateBitmapSourceFromHBitmap(icon3.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon3.Width, icon3.Height));
+     
             imReadFromFile.Source = Imaging.CreateBitmapSourceFromHBitmap(icon4.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon4.Width, icon4.Height));
-            imReadFromExcel.Source = Imaging.CreateBitmapSourceFromHBitmap(icon5.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon5.Width, icon5.Height));
-
 
             Bitmap icon7 = (Bitmap)resources.GetObject("shutdown.Image");
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = Imaging.CreateBitmapSourceFromHBitmap(icon7.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon7.Width, icon7.Height)); ;
             BtnCloseWindow.Background = ib;
-
-            Bitmap icon8 = (Bitmap)resources.GetObject("maximized.Image");
-            ImageBrush ib2 = new ImageBrush();
-            ib2.ImageSource = Imaging.CreateBitmapSourceFromHBitmap(icon8.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(icon8.Width, icon8.Height)); ;
-
-            BtnMaxSizeWindow.Background = ib2;
         }
 
-        public void LoadDGMatrix(double[][] matrix, double[] rightPart)
+        public void LoadMatrix(double[][] matrix, double[] rightPart)
         {
             dgResult.Columns.Clear();
             dgResult.ItemsSource = null;
 
             if (matrix.Count() > 0)
             {
-                // Find the longest row so we create enough columns
                 var max = matrix.Max(c => c.Count());
 
-                for (var i = 0; i < (rightPart == null ? max : max + 1); i++)
+                for (var counterI = 0; counterI < max + 1; ++counterI)
                 {
-                    if (i == max)
+                    if (counterI == max)
                     {
                         dgResult.Columns.Add(
                         new DataGridTextColumn
                         {
-                            Header = string.Format("Результат", i),
-                            Binding = new Binding(string.Format("[{0}]", i))
+                            Header = string.Format("Вспомогательные", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
                         });
                     }
                     else
@@ -130,8 +92,63 @@ namespace SolvingEquations
                         dgResult.Columns.Add(
                         new DataGridTextColumn
                         {
-                            Header = string.Format("Column: {0:00}", i),
-                            Binding = new Binding(string.Format("[{0}]", i))
+                            Header = string.Format("Column: {0:00}", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
+                        });
+                    }
+
+                }
+
+                double[][] resultMatrix = new double[matrix.Length][];
+                
+                for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
+                {
+                    resultMatrix[counterI] = new double[matrix.Length + 1];
+                    matrix[counterI].CopyTo(resultMatrix[counterI], 0);
+                    resultMatrix[counterI][resultMatrix[counterI].Length - 1] = rightPart[counterI];
+                }
+             
+                dgResult.ItemsSource = resultMatrix;
+            }
+        }
+
+
+        public void LoadMatrix(double[][] matrix, double[] resultPart, bool yes)
+        {
+            dgResult.Columns.Clear();
+            dgResult.ItemsSource = null;
+
+            if (matrix.Count() > 0)
+            {
+                var max = matrix.Max(c => c.Count());
+
+                for (var counterI = 0; counterI < max + 1; ++counterI)
+                {
+                    if (counterI == max)
+                    {
+                        dgResult.Columns.Add(
+                        new DataGridTextColumn
+                        {
+                            Header = string.Format("Результат", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
+                        });
+                    }
+                    if (counterI == max - 1)
+                    {
+                        dgResult.Columns.Add(
+                        new DataGridTextColumn
+                        {
+                            Header = string.Format("Вспомогательные", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
+                        });
+                    }
+                    else
+                    {
+                        dgResult.Columns.Add(
+                        new DataGridTextColumn
+                        {
+                            Header = string.Format("Column: {0:00}", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
                         });
                     }
 
@@ -139,21 +156,69 @@ namespace SolvingEquations
 
                 double[][] resultMatrix = new double[matrix.Length][];
 
-                if (rightPart == null)
+                for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
                 {
-                    resultMatrix = matrix;
+                    resultMatrix[counterI] = new double[matrix.Length + 1];
+                    matrix[counterI].CopyTo(resultMatrix[counterI], 0);
+                    resultMatrix[counterI][resultMatrix[counterI].Length - 1] = resultPart[counterI];
                 }
-                else
+
+                dgResult.ItemsSource = resultMatrix;
+            }
+        }
+
+        public void LoadMatrix(double[][] matrix, double[] rightPart, double[] resultPart)
+        {
+            dgResult.Columns.Clear();
+            dgResult.ItemsSource = null;
+
+            if (matrix.Count() > 0)
+            {
+                var max = matrix.Max(c => c.Count());
+
+                for (var counterI = 0; counterI < max + 2; ++counterI)
                 {
 
-                    for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
+                    if (counterI == max + 1)
                     {
-                        resultMatrix[counterI] = new double[matrix.Length + 1];
-                        matrix[counterI].CopyTo(resultMatrix[counterI], 0);
-                        resultMatrix[counterI][resultMatrix[counterI].Length - 1] = rightPart[counterI];
+                        dgResult.Columns.Add(
+                       new DataGridTextColumn
+                       {
+                           Header = string.Format("Результат", counterI),
+                           Binding = new Binding(string.Format("[{0}]", counterI))
+                       });
                     }
+                    else if (counterI == max)
+                    {
+                        dgResult.Columns.Add(
+                        new DataGridTextColumn
+                        {
+                            Header = string.Format("Вспомогательные", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
+                        });
+                    }
+                    else
+                    {
+                        dgResult.Columns.Add(
+                        new DataGridTextColumn
+                        {
+                            Header = string.Format("Column: {0:00}", counterI),
+                            Binding = new Binding(string.Format("[{0}]", counterI))
+                        });
+                    }
+
                 }
-               
+
+                double[][] resultMatrix = new double[matrix.Length][];
+
+                for (var counterI = 0; counterI < resultMatrix.Length; ++counterI)
+                {
+                    resultMatrix[counterI] = new double[matrix.Length + 2];
+                    matrix[counterI].CopyTo(resultMatrix[counterI], 0);
+                    resultMatrix[counterI][resultMatrix[counterI].Length - 2] = rightPart[counterI];
+                    resultMatrix[counterI][resultMatrix[counterI].Length - 1] = resultPart[counterI];
+                }
+
                 dgResult.ItemsSource = resultMatrix;
             }
         }
@@ -183,7 +248,7 @@ namespace SolvingEquations
 
                 arguments = gausMethod.Answer;
 
-                LoadDGMatrix(gausMethod.Matrix, gausMethod.Answer);
+                LoadMatrix(gausMethod.Matrix, gausMethod.RightPart, gausMethod.Answer);
             }
             else if (rbGaussJordan.IsChecked == true) 
             {
@@ -196,7 +261,7 @@ namespace SolvingEquations
                     arguments[counterI] = gausMethod.Answer[counterI];
                 }
 
-                LoadDGMatrix(gausMethod.Matrix, null);
+               // LoadDGMatrix(gausMethod.Matrix, null);
             }
             else
             {
@@ -212,7 +277,7 @@ namespace SolvingEquations
                 double[] solution = Cramer.Solve(cramerMatrix);
                 arguments = solution;
 
-                LoadDGMatrix(Matrix, solution);
+                LoadMatrix(cramerMatrix, solution, true);
             }
 
             formulasPanel.Children.Clear();
@@ -230,11 +295,11 @@ namespace SolvingEquations
                     {
                         if (Matrix[counterI][counterJ] > 0 && yravnenie != "")
                         {
-                            yravnenie += $"+ {Matrix[counterI][counterJ]} * ({arguments[counterI]}) ";
+                            yravnenie += $"+ {Matrix[counterI][counterJ]} * ({arguments[counterJ]}) ";
                         }
                         else
                         {
-                            yravnenie += $"{Matrix[counterI][counterJ]} * ({arguments[counterI]}) ";
+                            yravnenie += $"{Matrix[counterI][counterJ]} * ({arguments[counterJ]}) ";
                         }
                     }
                 }
@@ -247,8 +312,6 @@ namespace SolvingEquations
                 formulaControl.Foreground = Brushes.White;
                 formulaControl.FontSize = 16;
                 formulasPanel.Children.Add(formulaControl);
-
-                arguments[counterI] = Matrix[counterI][Matrix[counterI].Length - 1];
             }
         }
 

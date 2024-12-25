@@ -1,0 +1,94 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Newton"
+        xmlns:oxy="http://oxyplot.org/wpf" x:Class="Newton.MWindow"
+        mc:Ignorable="d"
+        Height="720"
+        Width="1220"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid x:Name="MainGrid">
+
+        <Border Background="#1C1D31"
+      CornerRadius="25"
+      BorderThickness="2"
+      BorderBrush="White"/>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="280 *" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140" />
+                <RowDefinition Height="140" />
+                <RowDefinition Height="78"/>
+                <RowDefinition Height="142"/>
+                <RowDefinition Height="170" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+
+            <Border x:Name="BtnCloseWindow" MouseDown="WindowClosing" Grid.Row="0" Grid.Column="4" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50"  Width="50" Cursor="Hand"/>
+            <TextBlock Grid.Row="0"
+        Grid.Column="1"
+        Grid.ColumnSpan="2"
+        Text="C H E R R Y  M A T H"
+        Foreground="#CDD7E0"
+        FontFamily="Oswald"
+        FontSize="36"
+        Margin="20, 50, 0, 0" MouseDown="TextMouseDown" />
+
+
+
+            <TextBlock Grid.Row="0"
+        Grid.Column="1"
+        Grid.ColumnSpan="2"
+        Text="М Е Т О Д  Н Ь Ю Т О Н А"
+        Foreground="#A688C8"
+        FontFamily="Roboto"
+        FontSize="12"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Margin="0, 0, 218, 23" />
+
+
+
+
+            <Grid  Grid.Column="1" Grid.RowSpan="3" Grid.Row="1"   Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="246" Height="271">
+                <TextBlock x:Name="labelFunction" Margin="10,10,122,178" TextWrapping="Wrap" Text="f(x) = " FontFamily="Verdana" FontSize="22" Foreground="White"/>
+                <TextBox x:Name="tbFunction" HorizontalAlignment="Left" Height="31" Margin="81,12,0,0" TextWrapping="Wrap" Text="Функция" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
+                <TextBox x:Name="tbXEnd" HorizontalAlignment="Left" Height="32" Margin="166,170,0,0" TextWrapping="Wrap" Text="Max" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333" ToolTip="Интервал по значению x. Максимальный" />
+                <TextBox x:Name="tbXStart" HorizontalAlignment="Left" Height="32" Margin="10,170,0,0" TextWrapping="Wrap" Text="Min" VerticalAlignment="Top" Width="70" FontSize="22" Foreground="#FF333333" ToolTip="Интервал по значению x. Минимальный"/>
+                <Label Content="↔" HorizontalAlignment="Center" Height="54" Margin="0,158,0,0" VerticalAlignment="Top" Width="42" FontFamily="Verdana" FontSize="36" Foreground="White"/>
+                <TextBlock x:Name="labelb_Копировать" TextWrapping="Wrap" Text="e = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="54" Height="22" VerticalAlignment="Top" Margin="0,220,182,0" Foreground="White" />
+                <TextBox x:Name="tbe" HorizontalAlignment="Left" Height="30" Margin="81,220,0,0" TextWrapping="Wrap" Text="0,00001" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" ToolTip="Точность" />
+                <TextBlock x:Name="labela" Margin="0,96,179,0" TextWrapping="Wrap" Text="a = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="White" ToolTip="Интервал изоляции. a"/>
+                <TextBlock x:Name="labelb" Margin="0,128,179,0" TextWrapping="Wrap" Text="b = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="White" ToolTip="Интервал изоляции. b" />
+                <TextBox x:Name="tba" HorizontalAlignment="Left" Height="32" Margin="81,96,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" TextChanged="tba_TextChanged"/>
+                <TextBox x:Name="tbb" HorizontalAlignment="Left" Height="32" Margin="81,132,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333"/>
+                <TextBlock x:Name="labelx0" Margin="0,59,179,0" TextWrapping="Wrap" Text="X0 = " FontFamily="Verdana" FontSize="22" HorizontalAlignment="Right" Width="57" Height="24" VerticalAlignment="Top" Foreground="White" ToolTip="Интервал изоляции. a"/>
+                <TextBox x:Name="tbx0" HorizontalAlignment="Left" Height="32" Margin="81,59,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155" FontSize="22" Foreground="#FF333333" TextChanged="tba_TextChanged"/>
+            </Grid>
+
+            <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BorderThickness="1" CornerRadius="20" BorderBrush="White" >
+                <oxy:PlotView x:Name="pvGraph" Margin="10,10,10,10" Background="{x:Null}"/>
+            </Border>
+
+            <Button x:Name="buttonSolve" Grid.Column="4" Grid.Row="4" Content="Точка пересечения" HorizontalAlignment="Right" Height="41"  VerticalAlignment="Top" Width="209" BorderBrush="#FF508A48" Background="#FF2ACC34" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Hand" RenderTransformOrigin="0,0" Click="Solve" Margin="0,129,0,0"/>
+            <Button x:Name="buttonGetMinimum" Grid.Column="3" Grid.Row="4"  Content="Мин/Макс" HorizontalAlignment="Right" Height="41" VerticalAlignment="Bottom" Width="208" BorderBrush="#FF508A48" Background="#FFE67C32" Foreground="White" FontFamily="Verdana" FontSize="18" Cursor="Hand" RenderTransformOrigin="0,0" Click="buttonGetMinimum_Click" Grid.ColumnSpan="2" Margin="0,0,244,0"/>
+        </Grid>
+
+    </Grid>
+</Window>
